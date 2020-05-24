@@ -1,0 +1,48 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+  {{ err }}
+  </li>
+</ul>
+
+<div class="card border-primary mb-3"><!-- bg-dark text-white  -->
+  <div class="card-header">{{ titulo }}</div>
+  <div class="card-body">
+
+    <form>
+
+      <div class="form-group row">
+        <label for="code" class="col-form-label col-sm-2">Code</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="product.code" name="code">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-form-label col-sm-2">Description</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="product.description" name="description">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="price" class="col-form-label col-sm-2">Price</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="product.price" name="price">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!product.id else elseBlock">Create</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
+          </ng-template>
+
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+</div>

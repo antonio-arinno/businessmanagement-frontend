@@ -1,0 +1,137 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+  {{ err }}
+  </li>
+</ul>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/invoice']" class="btn btn-light btn-xs">&laquo; volver</a>
+    </h4>
+
+    <form #invoiceForm="ngForm">
+
+
+
+      <div class="form-group row">
+        <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
+        <div class="col-sm-4">
+          <input type="text"
+          [formControl]="customerControl"
+          [matAutocomplete]="customerAuto"
+          (change)="onChangeCustomer3($event)"
+          class="form-control">
+          <mat-autocomplete #customerAuto="matAutocomplete"
+                            (optionSelected)="selectCustomer($event)">
+              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                {{customer.name}}
+              </mat-option>
+          </mat-autocomplete>
+        </div>
+
+          <div class="col-sm-6">
+            <input type="text" [(ngModel)]="invoice.customer.name" class="form-control" name="name" disabled>
+          </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label for="cliente" class="col-sm-2 col-form-label">Code</label>
+
+        <div class="col-sm-4">
+          <input type="text"
+          [formControl]="customerControl"
+          [matAutocomplete]="customerCodeAuto"
+          (change)="onChangeCustomer3($event)"
+          class="form-control">
+          <mat-autocomplete #customerCodeAuto="matAutocomplete"
+                            (optionSelected)="selectCustomer($event)">
+              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                {{customer.code}}
+              </mat-option>
+          </mat-autocomplete>
+        </div>
+
+        <div class="col-sm-6">
+          <input type="text" [(ngModel)]="invoice.customer.code" class="form-control" name="code" disabled>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="observacion" class="col-sm-2 col-form-label">Observación</label>
+        <div class="col-sm-6">
+          <textarea name="observacion" [(ngModel)]="invoice.observation" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input type="text" placeholder="Añadir producto" aria-label="Productos" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="showDescription" (optionSelected)="selectProduct($event)">
+              <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                {{product.description}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && invoiceForm.submitted">
+            La factura no puede no tener líneas!.
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info my-4" *ngIf="invoice.items.length == 0">
+        No hay líneas asignadas para la factura. Debe agregar al menos una!
+      </div>
+
+      <table class="table table-striped table-hover table-sm" *ngIf="invoice.items.length > 0">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of invoice.items">
+            <td>{{item.product.description}}</td>
+            <td>{{item.product.price}}</td>
+            <td><input type="number" value="{{item.quantity}}" class="form-control col-sm-4" (change)="updateQuantity(item.product.id, $event)"></td>
+            <td>{{item.getAmount()}}</td>
+            <td><button class="btn btn-danger btn-sm" type="button"
+              (click)="deleteInvoiceItem(item.product.id)">x</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h5 class="float-right" *ngIf="invoice.items.length > 0">Total: <span class="badge badge-secondary">{{getTotal()}}</span></h5>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="submit" (click)="create(invoiceForm)" value="Crear Factura" class="btn btn-secondary">
+<!--          <input type="submit" (click)="create()" value="Crear Factura" class="btn btn-secondary"> -->
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<!--
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search for a street"
+               [formControl]="control"
+               [matAutocomplete]="autoStreet">
+        <mat-autocomplete #autoStreet="matAutocomplete">
+          <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+            {{street}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+-->

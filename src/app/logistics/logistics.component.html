@@ -1,0 +1,40 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Product</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">List of Product</h5>
+
+    <div class="my-2 text-left">
+      <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/product/form']" >Create Product</buttom>
+    </div>
+    <div *ngIf="products?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="products?.length>0">
+      <thead>
+        <tr>
+          <th>code</th>
+          <th>description</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.code }}</td>
+          <td>{{ product.description }}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="button" [routerLink]="['/product/form',product.id]" class="btn btn-primary btn-sm">
+              edit
+            </button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="edit" (click)='delete(product)' class="btn btn-danger btn-sm">
+              delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -5,7 +5,7 @@
 </ul>
 
 <div class="card border-primary mb-3">
-  <div class="card-header">{{titulo}}</div>
+  <div class="card-header">{{titulo}} {{invoice.number}}</div>
   <div class="card-body">
     <h4 class="card-title">
       <a [routerLink]="['/invoice']" class="btn btn-light btn-xs">&laquo; volver</a>
@@ -110,10 +110,10 @@
 
       <h5 class="float-right" *ngIf="invoice.items.length > 0">Total: <span class="badge badge-secondary">{{getTotal()}}</span></h5>
 
+
       <div class="form-group row">
-        <div class="col-sm-6">
-          <input type="submit" (click)="create(invoiceForm)" value="Crear Factura" class="btn btn-secondary">
-<!--          <input type="submit" (click)="create()" value="Crear Factura" class="btn btn-secondary"> -->
+        <div class="col-sm-6" *ngIf="!invoice.number">
+          <input type="submit" (click)="create(invoiceForm)" value="Crear Factura 2" class="btn btn-secondary">
         </div>
       </div>
 

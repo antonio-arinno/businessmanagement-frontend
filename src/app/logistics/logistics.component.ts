@@ -31,11 +31,12 @@ export class LogisticsComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
+
       if (result.value) {
         this.productService.delete(product.id).subscribe(
           response => {
             this.products = this.products.filter(pro => pro !== product)
-            Swal.fire(response.title, response.message,  'success');
+            Swal.fire(response.title , response.message,  'success');
         },err => {
           Swal.fire(err.error.error, err.error.message, 'error')
         }

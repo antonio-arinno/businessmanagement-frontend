@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { URL_BACKEND } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/products';
+  private urlEndPoint: string = URL_BACKEND + '/api/products';
 
   constructor(private http: HttpClient, private router: Router) { }
 

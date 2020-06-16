@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { URL_BACKEND } from '../config/config';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CustomerService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/customers';
+  private urlEndPoint: string = URL_BACKEND + '/api/customers';
 
 //  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -83,12 +84,9 @@ export class CustomerService {
     );
   }
 
-  delete(id: number): Observable<Customer>{
+  delete(id: number): Observable<any>{
     return this.http.delete<Customer>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
-
-        console.error('e.error.messaje');
-
         return throwError(e);
       })
     )

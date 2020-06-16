@@ -164,11 +164,12 @@ export class InvoiceFormComponent implements OnInit {
 
   create(invoiceForm): void{
 
-    console.log(this.invoice);
     this.invoiceService.create(this.invoice)
     .subscribe( response => {
 //      this.router.navigate(['/logistics'])
+      this.invoice.number = response.invoice.number;
       Swal.fire(response.title, response.message,  'success');
+
     },
     err => {
       if(!err.error.errors){

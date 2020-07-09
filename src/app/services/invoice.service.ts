@@ -69,15 +69,25 @@ export class InvoiceService {
     );
   }
 
-
-
   create(invoice: Invoice): Observable<any>{
-    return this.http.post<Product>(this.urlEndPoint, invoice).pipe(
+    return this.http.post<Invoice>(this.urlEndPoint, invoice).pipe(
       catchError(e => {
         return throwError(e);
       })
     );
   }
+
+  sendEmail(id: number): Observable<any>{
+    return this.http.get(`${this.urlEndPoint}/email/${id}`).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
+  }
+
+
+
+
 
 
 }

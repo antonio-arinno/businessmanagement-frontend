@@ -110,28 +110,12 @@
 
       <h5 class="float-right" *ngIf="invoice.items.length > 0">Total: <span class="badge badge-secondary">{{getTotal()}}</span></h5>
 
-
       <div class="form-group row">
-        <div class="col-sm-6" *ngIf="!invoice.number">
-          <input type="submit" (click)="create(invoiceForm)" value="Crear Factura 2" class="btn btn-secondary">
-        </div>
+          <button class="btn btn-primary btn-sm" [disabled]="invoice.number" style="margin-right: 1px; margin-left: 1px" type="button" (click)="create(invoiceForm)">Crear</button>
+          <button class="btn btn-primary btn-sm" [disabled]="!invoice.number" style="margin-right: 1px; margin-left: 1px" type="button" (click)="sendEmail(invoice.id)">Enviar Email</button>
       </div>
 
     </form>
 
   </div>
 </div>
-
-<!--
-      <form class="example-form">
-        <input type="text"
-               placeholder="Search for a street"
-               [formControl]="control"
-               [matAutocomplete]="autoStreet">
-        <mat-autocomplete #autoStreet="matAutocomplete">
-          <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
-            {{street}}
-          </mat-option>
-        </mat-autocomplete>
-      </form>
--->

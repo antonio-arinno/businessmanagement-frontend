@@ -57,9 +57,7 @@ export class InvoiceFormComponent implements OnInit {
 
   }
 
-
-
-  private _filter3(value: string): Customer[] {
+    private _filter3(value: string): Customer[] {
     return this.customers.filter(customer => customer.name.includes(value));
   }
 
@@ -168,6 +166,7 @@ export class InvoiceFormComponent implements OnInit {
     .subscribe( response => {
 //      this.router.navigate(['/logistics'])
       this.invoice.number = response.invoice.number;
+      this.invoice.id = response.invoice.id;
       Swal.fire(response.title, response.message,  'success');
 
     },
@@ -176,6 +175,19 @@ export class InvoiceFormComponent implements OnInit {
         Swal.fire(err.error.error, err.error.message, 'error')
       }
       this.errores = err.error.errors as string [];
+    }
+    );
+  }
+
+
+  sendEmail(id: number): void {
+    console.log('id ', id);
+    this.invoiceService.sendEmail(id)
+    .subscribe( response => {
+      Swal.fire('Envio Correcto', 'Envio Correcto', 'success');
+    },
+    err => {
+      Swal.fire(err.error.error, err.error.message, 'error');
     }
     );
   }

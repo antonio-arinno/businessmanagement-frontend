@@ -6,6 +6,7 @@
 
     <div class="my-2 text-left">
       <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/invoice/form']" >Create Invoice</buttom>
+      <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/invoice/generate']" >Facturar</buttom>
     </div>
     <div *ngIf="invoices?.length==0" class="alert alert-info">
         No hay registros en al base de datos!

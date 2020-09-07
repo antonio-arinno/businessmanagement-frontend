@@ -27,22 +27,37 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { OrderComponent } from './order/order.component';
+import { OrderFormComponent } from './order/order-form.component';
+import { OrderViewComponent } from './order/order-view.component';
+import { InvoiceGenerateComponent } from './invoice/invoice-generate.component';
+import { ExternalDataComponent } from './external-data/external-data.component';
+
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/customer', pathMatch: 'full' },
   { path: 'customer', component: CustomerComponent},
   { path: 'customer/form', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'customer/form/:id', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
+
   { path: 'logistics', component: LogisticsComponent},
   { path: 'product/form', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
   { path: 'product/form/:id', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
 
+  { path: 'order', component: OrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'order/form', component: OrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'order/form/:id', component: OrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'order/view/:id', component: OrderViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
   { path: 'invoice', component: InvoiceComponent},
   { path: 'invoice/view/:id', component: InvoiceViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'invoice/form', component: InvoiceFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'invoice/generate', component: InvoiceGenerateComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
+  { path: 'external-data', component: ExternalDataComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'company', component: CompanyComponent },
-  { path: 'company/form', component: CompanyFormComponent },
   { path: 'login', component: LoginComponent }
 ];
 
@@ -61,7 +76,12 @@ const routes: Routes = [
     ProductFormComponent,
     InvoiceComponent,
     InvoiceFormComponent,
-    InvoiceViewComponent
+    InvoiceViewComponent,
+    OrderComponent,
+    OrderFormComponent,
+    OrderViewComponent,
+    InvoiceGenerateComponent,
+    ExternalDataComponent
   ],
   imports: [
     BrowserModule,

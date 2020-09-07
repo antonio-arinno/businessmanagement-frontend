@@ -32,7 +32,6 @@ export class CustomerComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-
       if (result.value) {
         this.customerService.delete(customer.id).subscribe(
           response => {

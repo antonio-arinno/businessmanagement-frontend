@@ -1,0 +1,50 @@
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Order</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">List of orders</h5>
+
+    <div class="my-2 text-left">
+      <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/order/form']" >Create Order</buttom>
+    </div>
+    <div *ngIf="orders?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="orders?.length>0">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit/view</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.number }}</td>
+          <td>{{ order.customer.name }}</td>
+          <td>{{ order.createAt }}</td>
+          <td>{{ order.total }}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="button" [routerLink]="['/order/form',order.id]" class="btn btn-primary btn-sm">
+              Edit
+            </button>
+
+            <button type="button" name="button" [routerLink]="['/order/view',order.id]" class="btn btn-primary btn-sm">
+              View
+            </button>
+
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="edit" (click)='delete(order)' class="btn btn-danger btn-sm">
+              delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

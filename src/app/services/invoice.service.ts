@@ -85,6 +85,15 @@ export class InvoiceService {
     );
   }
 
+  generate(id: number, id2: number): Observable<any>{
+    return this.http.get(`${this.urlEndPoint}/generate/${id}&${id2}`).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
+
+  }
+
 
 
 

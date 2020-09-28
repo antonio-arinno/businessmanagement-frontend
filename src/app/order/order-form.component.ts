@@ -62,8 +62,6 @@ export class OrderFormComponent implements OnInit {
         map(value => typeof value === 'string' ? value : value.code),
         flatMap(value => value ? this._filterCustomerCode(value) : [])
       );
-
-
   }
 
   loadOrder(): void{
@@ -160,13 +158,22 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
+  updateDiscount(id: number, event: any): void {
+    let discount: number = event.target.value as number;
+
+    this.order.items = this.order.items.map((item: OrderItem) => {
+      if (id === item.product.id) {
+        item.discount = discount;
+      }
+      return item;
+    });
+  }
+
   deleteOrderItem(id: number): void {
     this.order.items = this.order.items.filter((item: OrderItem) => id !== item.product.id);
   }
 
   create(): void{
-    console.log('create');
-
     this.orderService.create(this.order)
     .subscribe( response => {
       this.order.number = response.order.number;
@@ -185,7 +192,7 @@ export class OrderFormComponent implements OnInit {
   update():void{
     this.orderService.update(this.order)
     .subscribe ( order => {
-      this.router.navigate(['/order'])
+//      this.router.navigate(['/order'])
       Swal.fire('Orden Actualizado', 'Orden actualizada con exito', 'success')
     },
     err => {
@@ -199,22 +206,18 @@ export class OrderFormComponent implements OnInit {
 
 
   pdf(): void {
-
     this.orderService.pdf(this.order.id).subscribe(
       response => {
         const blob = new Blob([response], {type: 'application/pdf'});
-
         if (window.navigator && window.navigator.msSaveOrOpenBlob){
           window.navigator.msSaveOrOpenBlob(blob);
           return;
         }
-
         const data = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = data;
-        link.download = `Ord_${this.order.id}.pdf`;
+        link.download = `Ord_${this.order.id}_${this.order.customer.code}.pdf`;
         link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view:window}));
-
         setTimeout(function() {
           window.URL.revokeObjectURL(data);
           link.remove();
@@ -225,18 +228,14 @@ export class OrderFormComponent implements OnInit {
         Swal.fire(err.name, err.message, 'error')
       }
     );
-
   }
 
-
-
-
-
-
-
-
-
-
+  new():void{
+      console.log(this.order);
+      this.order = new Order();
+      this.order.customer = new Customer();
+      console.log(this.order);
+  }
 
 
   }

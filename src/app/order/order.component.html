@@ -27,7 +27,7 @@
           <td>{{ order.number }}</td>
           <td>{{ order.customer.name }}</td>
           <td>{{ order.createAt }}</td>
-          <td>{{ order.total }}</td>
+          <td>{{ order.total | number:'1.2-2' }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="button" [routerLink]="['/order/form',order.id]" class="btn btn-primary btn-sm">
               Edit

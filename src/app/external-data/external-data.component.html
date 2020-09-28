@@ -1,16 +1,39 @@
 <div class="card border-primary mb-3">
-  <div class="card-header">Titulo</div>
+  <div class="card-header">Load Files</div>
   <div class="card-body">
 
-    <div class="input-group">
+    <div class="input-group input-group form-group">
       <div class="custom-file">
         <input (change)="selectFile($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-        <label class="custom-file-label" for="inputGroupFile04">Subir fichero</label>
+        <label class="custom-file-label" for="inputGroupFile04">Load Customer</label>
       </div>
       <div class="input-group-append">
-        <button (click)="uploadFile()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+        <button (click)="uploadFile()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Load Customer</button>
       </div>
     </div>
+
+    <div class="input-group form-group">
+      <div class="custom-file">
+        <input (change)="selectFile($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+        <label class="custom-file-label" for="inputGroupFile04">Load Product</label>
+      </div>
+      <div class="input-group-append">
+        <button (click)="uploadFileProduct()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Load Product</button>
+      </div>
+    </div>
+
+    <div *ngIf="progreso > 0" class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{width: progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+        {{progreso}}%
+      </div>
+    </div>
+
+    <div *ngIf="progreso > 49 && progreso < 99" class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
 
   </div>
 </div>

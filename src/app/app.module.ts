@@ -32,12 +32,14 @@ import { OrderFormComponent } from './order/order-form.component';
 import { OrderViewComponent } from './order/order-view.component';
 import { InvoiceGenerateComponent } from './invoice/invoice-generate.component';
 import { ExternalDataComponent } from './external-data/external-data.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/customer', pathMatch: 'full' },
   { path: 'customer', component: CustomerComponent},
+  { path: 'customer/page/:page', component: CustomerComponent},
   { path: 'customer/form', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'customer/form/:id', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
 
@@ -81,7 +83,8 @@ const routes: Routes = [
     OrderFormComponent,
     OrderViewComponent,
     InvoiceGenerateComponent,
-    ExternalDataComponent
+    ExternalDataComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

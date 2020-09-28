@@ -14,9 +14,10 @@ export class Order {
   getTotal():number {
     let total = 0;
     this.items.forEach((item: OrderItem) => {
-      total += item.price * item.quantity;
+      total += item.getAmount();
+//      total += item.price * item.quantity;
     });
-    return total;
+    return Math.round(total * 100)/100
   }
 
 

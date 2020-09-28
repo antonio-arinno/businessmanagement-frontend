@@ -3,6 +3,7 @@ import { Customer } from '../model/customer';
 import { CustomerService } from '../services/customer.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../user/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,13 +13,32 @@ import { AuthService } from '../user/auth.service';
 export class CustomerComponent implements OnInit {
 
   customers: Customer[];
+  paginator: any;
 
   constructor(private customerService: CustomerService,
+              private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
 
+/*
   ngOnInit(): void {
     this.customerService.getCustomers().subscribe(
       customers => this.customers = customers
+    );
+  }
+*/
+  ngOnInit(): void {
+
+    this.activatedRoute.paramMap.subscribe( params => {
+      let page: number = +params.get('page');
+      if(!page){
+        page = 0;
+      }
+      this.customerService.getCustomers(page).subscribe(
+        response => {
+          this.customers = response.content as Customer[];
+          this.paginator = response;
+        });
+      }
     );
   }
 

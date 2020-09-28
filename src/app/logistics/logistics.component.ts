@@ -16,9 +16,11 @@ export class LogisticsComponent implements OnInit {
               public authService: AuthService) { }
 
   ngOnInit(): void {
+
     this.productService.getProducts().subscribe(
       products => this.products = products
     );
+
   }
 
   delete(product: Product): void {

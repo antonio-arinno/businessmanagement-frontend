@@ -19,18 +19,7 @@ export class CustomerService {
   constructor(private http: HttpClient, private router: Router) { }
 
 /*
-  private appendAuthorizationHeader(){
-    let token = this.authService.token;
-    if(token != null){
-      return this.httpHeaders.append('Authorization', 'Bearer '+ token);
-    }
-    return this.httpHeaders;
-  }
-*/
-
-
   getCustomers(): Observable<Customer[]>{
-//    return this.http.get<Customer[]>(this.urlEndPoint);
     return this.http.get(this.urlEndPoint).pipe(
       map ( response => {
         let customers = response as Customer[];
@@ -42,6 +31,20 @@ export class CustomerService {
     )
     );
   }
+*/
+
+  getCustomers(page: number): Observable<any>{
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+      map ( (response:any) => {
+        (response.content as Customer[]).map(customer => {
+            customer.name = customer.name.toUpperCase();
+            return customer;
+        });
+        return response;
+      })
+    );
+  }
+
 
   create(customer: Customer): Observable<Customer>{
     return this.http.post<Customer>(this.urlEndPoint, customer).pipe(

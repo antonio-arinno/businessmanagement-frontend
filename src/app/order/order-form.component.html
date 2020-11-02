@@ -126,12 +126,12 @@
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!order.number else elseBlock">Create</button>
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!order.number else elseBlock">Save</button>
 
           <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
-            <button class="btn btn-primary" role="button" (click)='pdf()'>PDF</button>
-            <button class="btn btn-primary" role="button" (click)='new()'>New Order</button>
+            <button class="btn btn-primary" role="button" (click)='update()' style="margin-right: 1px; margin-left: 1px">Update</button>
+            <button class="btn btn-primary" role="button" (click)='pdf()' style="margin-right: 1px; margin-left: 1px">PDF</button>
+            <button class="btn btn-primary" role="button" (click)='new()' style="margin-right: 1px; margin-left: 1px">New Order</button>
           </ng-template>
 
         </div>

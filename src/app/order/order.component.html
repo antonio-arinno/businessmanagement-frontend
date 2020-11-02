@@ -29,11 +29,11 @@
           <td>{{ order.createAt }}</td>
           <td>{{ order.total | number:'1.2-2' }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="button" [routerLink]="['/order/form',order.id]" class="btn btn-primary btn-sm">
+            <button type="button" name="button" [routerLink]="['/order/form',order.id]" class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
               Edit
             </button>
 
-            <button type="button" name="button" [routerLink]="['/order/view',order.id]" class="btn btn-primary btn-sm">
+            <button type="button" name="button" [routerLink]="['/order/view',order.id]" class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
               View
             </button>
 
@@ -46,5 +46,10 @@
         </tr>
       </tbody>
     </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]= "paginator">
+
+    </paginator-nav>
+
   </div>
 </div>

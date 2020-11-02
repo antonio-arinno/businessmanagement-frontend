@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../model/customer';
+import { Address } from '../model/address';
 import { CustomerService } from '../services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -12,7 +13,10 @@ import Swal from 'sweetalert2';
 export class CustomerFormComponent implements OnInit {
 
   public customer: Customer = new Customer();
-  public titulo: string = "Crear Cliente";
+
+  public address: Address = new Address();
+
+  public titulo: string = "Customer";
 
   public errores: string[];
 
@@ -23,6 +27,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.customer.address = this.address;
     this.loadCustomer();
   }
 
@@ -43,6 +48,8 @@ export class CustomerFormComponent implements OnInit {
   }
 
   create(): void{
+    console.log('kkklkl');
+    console.log(this.customer);
     this.customerService.create(this.customer)
     .subscribe( customer => {
       this.router.navigate(['/customer'])

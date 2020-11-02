@@ -24,6 +24,15 @@ export class ExtenalDataService {
     );
   }
 
+  uploadFileCustomer(file: File): Observable<HttpEvent<{}>>{
+    let formData = new FormData();
+    formData.append("file", file);
+    const req = new HttpRequest('POST', `${this.urlEndPoint}/customer`, formData, {
+      reportProgress: true
+    });
+    return this.http.request(req);
+
+  }
 
   uploadFileProduct(file: File): Observable<HttpEvent<{}>>{
     let formData = new FormData();
@@ -32,7 +41,6 @@ export class ExtenalDataService {
       reportProgress: true
     });
     return this.http.request(req);
-
   }
 /*
   uploadFileProduct(file: File): Observable<any>{

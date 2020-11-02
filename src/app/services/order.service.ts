@@ -17,6 +17,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
+/*
   getOrders(): Observable<Order[]>{
     return this.http.get(this.urlEndPoint).pipe(
       map ( response => {
@@ -26,6 +27,18 @@ export class OrderService {
         });
       }
     )
+    );
+  }
+*/
+
+  getOrders(page: number): Observable<any>{
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+      map ( (response:any) => {
+        (response.content as Order[]).map(order => {
+            return order;
+        });
+        return response;
+      })
     );
   }
 

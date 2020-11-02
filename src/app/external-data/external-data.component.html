@@ -4,18 +4,30 @@
 
     <div class="input-group input-group form-group">
       <div class="custom-file">
-        <input (change)="selectFile($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-        <label class="custom-file-label" for="inputGroupFile04">Load Customer</label>
+        <input (change)="selectFileCustomer($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+        <label class="custom-file-label" for="inputGroupFile04">{{fileNameCustomer}}</label>
       </div>
       <div class="input-group-append">
-        <button (click)="uploadFile()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Load Customer</button>
+        <button (click)="uploadFileCustomer()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Load Customer</button>
+      </div>
+    </div>
+
+    <div *ngIf="progressCustomer > 0" class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{width: progressCustomer+'%'}" attr.aria-valuenow="{{progressCustomer}}" aria-valuemin="0" aria-valuemax="100">
+        {{progressCustomer}}%
+      </div>
+    </div>
+
+    <div *ngIf="progressCustomer > 49 && progressCustomer < 99" class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
 
     <div class="input-group form-group">
       <div class="custom-file">
-        <input (change)="selectFile($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-        <label class="custom-file-label" for="inputGroupFile04">Load Product</label>
+        <input (change)="selectFileProduct($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+        <label class="custom-file-label" for="inputGroupFile04">{{fileNameProduct}}</label>
       </div>
       <div class="input-group-append">
         <button (click)="uploadFileProduct()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Load Product</button>

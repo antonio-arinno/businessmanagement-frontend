@@ -8,6 +8,10 @@ export class PaginatorComponent implements OnInit, OnChanges {
 
   @Input()
   paginator: any;
+
+  @Input()
+  component: string;
+
   pages: number[];
   from: number;
   to: number;

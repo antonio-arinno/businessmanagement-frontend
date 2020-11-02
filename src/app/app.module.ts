@@ -38,16 +38,19 @@ import { PaginatorComponent } from './paginator/paginator.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/customer', pathMatch: 'full' },
+
   { path: 'customer', component: CustomerComponent},
   { path: 'customer/page/:page', component: CustomerComponent},
   { path: 'customer/form', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'customer/form/:id', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
 
   { path: 'logistics', component: LogisticsComponent},
+  { path: 'product/page/:page', component: LogisticsComponent},
   { path: 'product/form', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
   { path: 'product/form/:id', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
 
   { path: 'order', component: OrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'order/page/:page', component: OrderComponent},
   { path: 'order/form', component: OrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'order/form/:id', component: OrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'order/view/:id', component: OrderViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Customer } from '../model/customer';
 import { CustomerService } from '../services/customer.service';
 import Swal from 'sweetalert2';
@@ -14,20 +14,13 @@ export class CustomerComponent implements OnInit {
 
   customers: Customer[];
   paginator: any;
+  component= '/customer';
 
   constructor(private customerService: CustomerService,
               private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
 
-/*
   ngOnInit(): void {
-    this.customerService.getCustomers().subscribe(
-      customers => this.customers = customers
-    );
-  }
-*/
-  ngOnInit(): void {
-
     this.activatedRoute.paramMap.subscribe( params => {
       let page: number = +params.get('page');
       if(!page){

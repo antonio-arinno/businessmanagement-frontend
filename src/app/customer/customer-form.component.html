@@ -25,7 +25,7 @@
 
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active show" id="General">
+                <div class="tab-pane fade in active show card-body" id="General">
 
                   <div class="form-group row">
                     <label for="code" class="col-form-label col-sm-2">Code</label>
@@ -33,6 +33,14 @@
                       <input type="text" class="form-control" [(ngModel)]="customer.code" name="code">
                     </div>
                   </div>
+
+                  <div class="form-group row">
+                    <label for="code" class="col-form-label col-sm-2">Tax. Id.</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" [(ngModel)]="customer.taxId" name="taxId">
+                    </div>
+                  </div>
+
                   <div class="form-group row">
                     <label for="name" class="col-form-label col-sm-2">Name</label>
                     <div class="col-sm-6">
@@ -51,8 +59,77 @@
                   </div>
 
                 </div>
-                <div class="tab-pane fade" id="Address">Default 2</div>
-                <div class="tab-pane fade" id="Varios">Default 3</div>
+                <div class="tab-pane fade card-body" id="Address">
+
+                  <div class="form-group row">
+                    <label for="typeStreet" class="col-form-label col-sm-2">Type of Street</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.typeStreet" name="typeStreet">
+                    </div>
+                    <label for="street" class="col-form-label col-sm-2">Street</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.street" name="street">
+                    </div>
+                    <label for="numberKm" class="col-form-label col-sm-1">Num</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.numberKm" name="numberKm">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="country" class="col-form-label col-sm-2">Country</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.country" name="country">
+                    </div>
+                    <label for="street" class="col-form-label col-sm-2">Province/State</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.stateProvince" name="stateProvince">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="town" class="col-form-label col-sm-2">Town</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.town" name="town">
+                    </div>
+                    <label for="postalCode" class="col-form-label col-sm-2">Postal code</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.postalCode" name="postalCode">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="building" class="col-form-label col-sm-2">Building</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.building" name="building">
+                    </div>
+                    <label for="staircase" class="col-form-label col-sm-2">Staircase</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.staircase" name="staircase">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="floor" class="col-form-label col-sm-2">Floor</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.floor" name="floor">
+                    </div>
+                    <label for="door" class="col-form-label col-sm-2">Door</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" [(ngModel)]="customer.address.door" name="door">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="additionalInformation" class="col-sm-2 col-form-label">Observación</label>
+                    <div class="col-sm-10">
+                      <textarea name="additionalInformation" [(ngModel)]="customer.address.additionalInformation" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="Varios">
+
+                </div>
 
             </div>
         </div>
@@ -66,7 +143,7 @@
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!customer.id else elseBlock">Create</button>
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!customer.id else elseBlock">Save</button>
 
           <ng-template #elseBlock>
             <button class="btn btn-primary" role="button" (click)='update()'>Update</button>

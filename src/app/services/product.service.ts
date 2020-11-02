@@ -15,6 +15,8 @@ export class ProductService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+
+/*
   getProducts(): Observable<Product[]>{
     return this.http.get(this.urlEndPoint).pipe(
       map ( response => {
@@ -27,6 +29,20 @@ export class ProductService {
     )
     );
   }
+*/
+
+  getProducts(page: number): Observable<any>{
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+      map ( (response:any) => {
+        (response.content as Product[]).map(product => {
+            product.description = product.description.toUpperCase();
+            return product;
+        });
+        return response;
+      })
+    );
+  }
+
 
   getProduct(id: number): Observable<Product>{
     return this.http.get<Product>(`${this.urlEndPoint}/${id}`).pipe(

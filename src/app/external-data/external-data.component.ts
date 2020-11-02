@@ -10,22 +10,41 @@ import Swal from 'sweetalert2';
 export class ExternalDataComponent implements OnInit {
 
   private selectedFile: File;
-  public progreso: number = 0;
+  public fileNameProduct: string = 'Load Product';
+  public fileNameCustomer: string = 'Load Customer';
+  public progressCustomer: number = 0;
 
+  public progreso: number = 0;
 
   constructor(private extenalDataService: ExtenalDataService) { }
 
   ngOnInit(): void {
   }
 
-  selectFile(event){
+  selectFileCustomer(event){
     this.selectedFile = event.target.files[0];
+    this.fileNameCustomer = this.selectedFile.name;
+    this.progressCustomer = 0;
+
   }
 
-  uploadFile(){
-    this.extenalDataService.uploadFile(this.selectedFile).subscribe(
-      response => {
-        Swal.fire(response.title , response.message,  'success');
+  selectFileProduct(event){
+    this.selectedFile = event.target.files[0];
+    this.fileNameProduct = this.selectedFile.name;
+    this.progreso = 0;
+  }
+
+  uploadFileCustomer(){
+    this.extenalDataService.uploadFileCustomer(this.selectedFile).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress){
+          this.progressCustomer = Math.round((event.loaded / event.total) * 100)/2;
+
+        } else if(event.type === HttpEventType.Response){
+          this.progressCustomer = 100;
+          let response: any = event.body;
+          Swal.fire(response.title , response.message, 'success');
+        }
       },err => {
         Swal.fire(err.error.error, err.error.message, 'error')
       }
@@ -33,7 +52,6 @@ export class ExternalDataComponent implements OnInit {
   }
 
   uploadFileProduct(){
-    this.progreso = 0;
     this.extenalDataService.uploadFileProduct(this.selectedFile).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress){

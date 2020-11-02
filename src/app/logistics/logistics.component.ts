@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../model/product';
 import { AuthService } from '../user/auth.service';
+import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,16 +12,26 @@ import Swal from 'sweetalert2';
 export class LogisticsComponent implements OnInit {
 
   products: Product[];
+  paginator: any;
+  component= '/product';
 
   constructor(private productService: ProductService,
+              private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
 
   ngOnInit(): void {
-
-    this.productService.getProducts().subscribe(
-      products => this.products = products
+    this.activatedRoute.paramMap.subscribe( params => {
+      let page: number = +params.get('page');
+      if(!page){
+        page = 0;
+      }
+      this.productService.getProducts(page).subscribe(
+        response => {
+          this.products = response.content as Product[];
+          this.paginator = response;
+        });
+      }
     );
-
   }
 
   delete(product: Product): void {

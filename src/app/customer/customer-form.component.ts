@@ -13,11 +13,8 @@ import Swal from 'sweetalert2';
 export class CustomerFormComponent implements OnInit {
 
   public customer: Customer = new Customer();
-
   public address: Address = new Address();
-
   public titulo: string = "Customer";
-
   public errores: string[];
 
   constructor(private customerService: CustomerService,
@@ -35,9 +32,10 @@ export class CustomerFormComponent implements OnInit {
     this.activateRoute.params.subscribe(params => {
       let id = params['id']
       if(id){
-//        this.customerService.getCustomer(id).subscribe((customer) => this.customer = customer);
         this.customerService.getCustomer(id)
-          .subscribe((customer) => this.customer = customer,
+          .subscribe((customer) => {
+            this.customer = customer
+            },
            err => {
              this.router.navigate(['/customer'])
              Swal.fire(err.error.error, err.error.message, 'error');

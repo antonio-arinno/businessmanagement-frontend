@@ -1,5 +1,3 @@
-<p>company works!</p>
-
 <ul class="alert alert-danger" *ngIf="errores?.length > 0">
   <li *ngFor="let err of errores">
   {{ err }}
@@ -23,7 +21,7 @@
       <div class="form-group row">
         <label for="typeStreet" class="col-form-label col-sm-2">Type of Street</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.typeStreet" name="typeStreet">
+          <input type="text" class="form-control" [(ngModel)]="company.address.typeStreet" name="typeStreet"> 
         </div>
         <label for="street" class="col-form-label col-sm-2">Street</label>
         <div class="col-sm-3">

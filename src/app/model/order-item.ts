@@ -1,4 +1,5 @@
 import { Product } from './product';
+import { IvaType } from './iva-type.enum';
 
 export class OrderItem {
 
@@ -7,6 +8,8 @@ export class OrderItem {
   price: number;
   discount : number = 0;
   quantity: number = 1;
+  iva: number;
+  ivaType: IvaType;
 
 
   public getAmount(): number {

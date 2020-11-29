@@ -1,4 +1,104 @@
 <p>company works!</p>
-<!--
-      <buttom  class="btn btn-rounded btn-primary" type="button" [routerLink]="['/company/form']" >Create Customer</buttom>
--->
+
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+  {{ err }}
+  </li>
+</ul>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">{{ titulo }}</div>
+  <div class="card-body">
+
+    <form>
+
+      <div class="form-group row">
+        <label for="name" class="col-form-label col-sm-2">Code</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="company.name" name="name">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="typeStreet" class="col-form-label col-sm-2">Type of Street</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.typeStreet" name="typeStreet">
+        </div>
+        <label for="street" class="col-form-label col-sm-2">Street</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="company.address.street" name="street">
+        </div>
+        <label for="numberKm" class="col-form-label col-sm-1">Num</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.numberKm" name="numberKm">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="country" class="col-form-label col-sm-2">Country</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.country" name="country">
+        </div>
+        <label for="street" class="col-form-label col-sm-2">Province/State</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="company.address.stateProvince" name="stateProvince">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="town" class="col-form-label col-sm-2">Town</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.town" name="town">
+        </div>
+        <label for="postalCode" class="col-form-label col-sm-2">Postal code</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="company.address.postalCode" name="postalCode">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="building" class="col-form-label col-sm-2">Building</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.building" name="building">
+        </div>
+        <label for="staircase" class="col-form-label col-sm-2">Staircase</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="company.address.staircase" name="staircase">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="floor" class="col-form-label col-sm-2">Floor</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" [(ngModel)]="company.address.floor" name="floor">
+        </div>
+        <label for="door" class="col-form-label col-sm-2">Door</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="company.address.door" name="door">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="additionalInformation" class="col-sm-2 col-form-label">Observación</label>
+        <div class="col-sm-10">
+          <textarea name="additionalInformation" [(ngModel)]="company.address.additionalInformation" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="phone" class="col-form-label col-sm-2">Phone</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="company.address.telephone" name="phone">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

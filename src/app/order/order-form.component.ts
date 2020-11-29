@@ -5,6 +5,7 @@ import { Order } from '../model/order';
 import { OrderItem } from '../model/order-item';
 import { Customer } from '../model/customer';
 import { Product } from '../model/product';
+import { Iva } from '../model/iva';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
@@ -21,6 +22,7 @@ export class OrderFormComponent implements OnInit {
   titulo: string = 'New Order';
   order: Order = new Order();
   customer: Customer = new Customer();
+  iva: Iva = new Iva();
 
   errores: string[];
 
@@ -72,6 +74,7 @@ export class OrderFormComponent implements OnInit {
           .subscribe((order) => {
             this.order = this.orderService.setOrder(order);
             this.titulo = 'Actualizar Orden';
+            console.log(this.order)
           },
            err => {
              this.router.navigate(['/order'])
@@ -105,6 +108,8 @@ export class OrderFormComponent implements OnInit {
       let orderItem = new OrderItem();
       orderItem.product = product;
       orderItem.price = product.price;
+      orderItem.iva = this.iva.getIva(product.ivaType);
+      orderItem.ivaType = product.ivaType;
       this.order.items.push(orderItem);
     }
 
@@ -174,6 +179,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   create(): void{
+    console.log(this.order);
     this.orderService.create(this.order)
     .subscribe( response => {
       this.order.number = response.order.number;
@@ -216,7 +222,7 @@ export class OrderFormComponent implements OnInit {
         const data = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = data;
-        link.download = `Ord_${this.order.id}_${this.order.customer.code}.pdf`;
+        link.download = `Ord_${this.order.number}_${this.order.customer.code}.pdf`;
         link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view:window}));
         setTimeout(function() {
           window.URL.revokeObjectURL(data);

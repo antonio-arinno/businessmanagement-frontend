@@ -48,8 +48,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   create(): void{
-    console.log('kkklkl');
-    console.log(this.customer);
     this.customerService.create(this.customer)
     .subscribe( customer => {
       this.router.navigate(['/customer'])
@@ -65,6 +63,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   update():void{
+    console.log(this.customer);
     this.customerService.update(this.customer)
     .subscribe ( customer => {
       this.router.navigate(['/customer'])

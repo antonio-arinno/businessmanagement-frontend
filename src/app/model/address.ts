@@ -12,5 +12,8 @@ export class Address {
   floor: string;
   door: string;
   additionalInformation: string;
+  telephone: string;
+  email: string;
+  web: string;
 
 }

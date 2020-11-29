@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../model/product';
+import { Provider } from '../model/provider';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -80,6 +81,19 @@ export class ProductService {
         }
         return throwError(e);
       })
+    );
+  }
+
+  getProviderName(term: string): Observable<Provider[]>{
+    console.log('getProviderName');
+    return this.http.get(`${this.urlEndPoint}/load-provider-name/${term}`).pipe(
+      map ( response => {
+        let provider = response as Provider[];
+        return provider.map(provider => {
+            return provider;
+        });
+      }
+    )
     );
   }
 

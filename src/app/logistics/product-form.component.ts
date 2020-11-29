@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../model/product';
-import { ProductService } from '../services/product.service';
+import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { map, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Product } from '../model/product';
+import { Provider } from '../model/provider';
+import { IvaType } from '../model/iva-type.enum';
+import { ProductService } from '../services/product.service';
+
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,17 +20,40 @@ import Swal from 'sweetalert2';
 export class ProductFormComponent implements OnInit {
 
   public product: Product = new Product();
+  public provider: Provider = new Provider();
   public titulo: string = "Crear Producto";
   public errores: string[];
+
+  providers: Provider[] = [];
+
+  providerNameControl = new FormControl();
+  filteredProvidersName: Observable<Provider[]>;
+
+  ivaTypes : any[] = [];
 
 
 
   constructor(private productService: ProductService,
-    private router: Router,
-    private activateRoute: ActivatedRoute) { }
+              private router: Router,
+              private activateRoute: ActivatedRoute) {
+      this.product.provider = this.provider;
+    }
 
   ngOnInit(): void {
       this.loadProduct();
+
+      for(let item in IvaType) {
+        if(isNaN(Number(item))){
+          this.ivaTypes.push({text: item, value: IvaType[item]});
+        }
+      }
+
+
+      this.filteredProvidersName = this.providerNameControl.valueChanges
+        .pipe(
+          map(value => typeof value === 'string' ? value : value.name),
+          flatMap(value => value ? this._filterProviderName(value) : [])
+        );
   }
 
   loadProduct(): void{
@@ -33,6 +64,7 @@ export class ProductFormComponent implements OnInit {
           .subscribe((product) => {
             this.product = product;
             this.titulo = 'Actualizar Producto';
+            console.log(product);
           },
            err => {
              this.router.navigate(['/logistics'])
@@ -43,6 +75,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   create(): void{
+    console.log(this.product);
     this.productService.create(this.product)
     .subscribe( response => {
       this.router.navigate(['/logistics'])
@@ -71,5 +104,22 @@ export class ProductFormComponent implements OnInit {
     }
     );
   }
+
+  private _filterProviderName(value: string): Observable<Provider[]> {
+    console.log('_filterProviderName');
+    const filterValue = value.toLowerCase();
+    return this.productService.getProviderName(filterValue);
+  }
+
+  selectProvider(event: MatAutocompleteSelectedEvent): void {
+    let provider = event.option.value as Provider;
+    this.provider.id = provider.id;
+    this.provider.name = provider.name;
+    this.providerNameControl.setValue('');
+    event.option.focus();
+    event.option.deselect();
+  }
+
+
 
 }

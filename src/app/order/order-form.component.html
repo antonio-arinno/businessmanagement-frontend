@@ -125,8 +125,11 @@
       <h5 class="float-right" *ngIf="order.items.length > 0">Total: <span class="badge badge-secondary">{{order.getTotal()}}</span></h5>
 
       <div class="form-group row">
-        <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!order.number else elseBlock">Save</button>
+        <div class="col-sm-12">
+          <div *ngIf="!order.number else elseBlock">
+              <button class="btn btn-primary" role="button" (click)='create()'>Save</button>
+              <a [routerLink]="['/order']" class=" float-right btn btn-primary">&laquo; volver</a>
+          </div>
 
           <ng-template #elseBlock>
             <button class="btn btn-primary" role="button" (click)='update()' style="margin-right: 1px; margin-left: 1px">Update</button>

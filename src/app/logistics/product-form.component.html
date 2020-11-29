@@ -4,11 +4,32 @@
   </li>
 </ul>
 
-<div class="card border-primary mb-3"><!-- bg-dark text-white  -->
+<div class="card border-primary mb-3">
   <div class="card-header">{{ titulo }}</div>
   <div class="card-body">
 
     <form>
+
+      <div class="form-group row">
+        <label for="provider" class="col-sm-2 col-form-label">Provider</label>
+
+        <div class="col-sm-4">
+          <input type="text"
+          [formControl]="providerNameControl"
+          [matAutocomplete]="providerNameAuto"
+          class="form-control">
+          <mat-autocomplete #providerNameAuto="matAutocomplete"
+                            (optionSelected)="selectProvider($event)">
+              <mat-option *ngFor="let provider of filteredProvidersName | async" [value]="provider">
+                {{provider.name}}
+              </mat-option>
+          </mat-autocomplete>
+        </div>
+
+        <div class="col-sm-6">
+          <input type="text" [(ngModel)]="product.provider.name" class="form-control" name="nameProvider" disabled>
+        </div>
+      </div>
 
       <div class="form-group row">
         <label for="code" class="col-form-label col-sm-2">Code</label>
@@ -27,6 +48,15 @@
         <div class="col-sm-6">
           <input type="text" class="form-control" [(ngModel)]="product.price" name="price">
         </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="iva" class="col-form-label col-sm-2">Iva</label>
+
+        <select class="form-control" name="ivaType" [(ngModel)]="product.ivaType">
+          <option *ngFor="let ivaType of ivaTypes" [value]="ivaType.value">{{ivaType.text}}</option>
+        </select>
+
       </div>
 
 

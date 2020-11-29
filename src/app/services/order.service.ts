@@ -124,8 +124,11 @@ export class OrderService {
         let itemTemp = new OrderItem();
         itemTemp.id = item.id;
         itemTemp.price = item.price;
+        itemTemp.discount = item.discount;
         itemTemp.product = item.product;
         itemTemp.quantity = item.quantity;
+        itemTemp.iva = item.iva;
+        itemTemp.ivaType = item.ivaType;
         setOrder.items.push(itemTemp)
     }
     return setOrder;

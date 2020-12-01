@@ -16,7 +16,6 @@ import { TokenInterceptor } from './user/interceptor/token.interceptor';
 import { AuthInterceptor } from './user/interceptor/auth.interceptor';
 import { LogisticsComponent } from './logistics/logistics.component';
 import { CompanyComponent } from './company/company.component';
-//import { CompanyFormComponent } from './company/company-form.component';
 import { ProductFormComponent } from './logistics/product-form.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceFormComponent } from './invoice/invoice-form.component';
@@ -77,7 +76,6 @@ const routes: Routes = [
     CustomerFormComponent,
     LogisticsComponent,
     CompanyComponent,
-//    CompanyFormComponent,
     ProductFormComponent,
     InvoiceComponent,
     InvoiceFormComponent,

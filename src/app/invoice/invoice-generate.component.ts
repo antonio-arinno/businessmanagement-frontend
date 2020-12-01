@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
+
+
 import { InvoiceService } from '../services/invoice.service';
 import Swal from 'sweetalert2';
 
@@ -8,7 +11,18 @@ import Swal from 'sweetalert2';
 })
 export class InvoiceGenerateComponent implements OnInit {
 
-  public titulo: string = "Crear Cliente";
+  public titulo: string = "Generar facturacion";
+
+
+  range = new FormGroup({
+        start: new FormControl(),
+        end: new FormControl()
+    });
+
+  public fromDate: string;
+  public toDate: string;
+
+
 
   constructor(private invoiceService: InvoiceService) { }
 
@@ -23,7 +37,6 @@ export class InvoiceGenerateComponent implements OnInit {
         Swal.fire(err.error.error, err.error.message, 'error')
       }
     )
-    console.log('correcto');
   }
 
 

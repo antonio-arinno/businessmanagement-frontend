@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { URL_BACKEND } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Order } from '../model/order';
 import { OrderItem } from '../model/order-item';
 import { Product } from '../model/product';
 import { Customer } from '../model/customer';
-import { map, catchError } from 'rxjs/operators';
+import { URL_BACKEND } from '../config/config';
 
 @Injectable({
   providedIn: 'root'

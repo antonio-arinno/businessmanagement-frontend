@@ -61,7 +61,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   update():void{
-    console.log(this.customer);
     this.customerService.update(this.customer)
     .subscribe ( customer => {
       this.router.navigate(['/customer'])

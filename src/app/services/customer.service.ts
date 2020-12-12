@@ -74,7 +74,6 @@ export class CustomerService {
   }
 
   update(customer: Customer): Observable<Customer>{
-    console.log(customer);
     return this.http.put(`${this.urlEndPoint}/${customer.id}`, customer).pipe(
       map((response: any) => response.customer as Customer),
       catchError(e => {

@@ -1,7 +1,7 @@
 <app-invoice-generate></app-invoice-generate>
 
 <div class="card border-primary mb-3">
-  <div class="card-header">Invoide</div>
+  <div class="card-header">Invoice</div>
   <div class="card-body text-primary">
     <h5 class="card-title">List of invoices</h5>
 
@@ -10,7 +10,10 @@
       <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/invoice/form']" >Create Invoice</buttom>
       <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/invoice/generate']" >Facturar</buttom>
 -->
-      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary" role="button" (click)='generate()'>Generate</button>
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary"
+            role="button" (click)='generate()' style="margin-right: 1px; margin-left: 1px">Generar Pte.</button>
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary"
+            role="button" (click)='modalOpen()' style="margin-right: 1px; margin-left: 1px">Seleccionar</button>
     </div>
 
     <div *ngIf="invoices?.length==0" class="alert alert-info">

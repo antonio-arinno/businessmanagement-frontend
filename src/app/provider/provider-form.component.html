@@ -11,92 +11,104 @@
     <form>
 
       <div class="form-group row">
-        <label for="name" class="col-form-label col-sm-2">Name</label>
+        <label for="name" class="col-form-label col-sm-2">Code</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.name" name="name">
+          <input type="text" class="form-control" [(ngModel)]="provider.code" name="code">
         </div>
       </div>
 
+      <div class="form-group row">
+        <label for="name" class="col-form-label col-sm-2">Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="provider.name" name="name">
+        </div>
+      </div>
 
       <div class="form-group row">
         <label for="typeStreet" class="col-form-label col-sm-2">Type of Street</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.typeStreet" name="typeStreet">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.typeStreet" name="typeStreet">
         </div>
         <label for="street" class="col-form-label col-sm-2">Street</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="company.address.street" name="street">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.street" name="street">
         </div>
         <label for="numberKm" class="col-form-label col-sm-1">Num</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.numberKm" name="numberKm">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.numberKm" name="numberKm">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="country" class="col-form-label col-sm-2">Country</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.country" name="country">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.country" name="country">
         </div>
         <label for="street" class="col-form-label col-sm-2">Province/State</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="company.address.stateProvince" name="stateProvince">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.stateProvince" name="stateProvince">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="town" class="col-form-label col-sm-2">Town</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.town" name="town">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.town" name="town">
         </div>
         <label for="postalCode" class="col-form-label col-sm-2">Postal code</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="company.address.postalCode" name="postalCode">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.postalCode" name="postalCode">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="building" class="col-form-label col-sm-2">Building</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.building" name="building">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.building" name="building">
         </div>
         <label for="staircase" class="col-form-label col-sm-2">Staircase</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="company.address.staircase" name="staircase">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.staircase" name="staircase">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="floor" class="col-form-label col-sm-2">Floor</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" [(ngModel)]="company.address.floor" name="floor">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.floor" name="floor">
         </div>
         <label for="door" class="col-form-label col-sm-2">Door</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="company.address.door" name="door">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.door" name="door">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="additionalInformation" class="col-sm-2 col-form-label">Observación</label>
         <div class="col-sm-10">
-          <textarea name="additionalInformation" [(ngModel)]="company.address.additionalInformation" class="form-control"></textarea>
+          <textarea name="additionalInformation" [(ngModel)]="provider.address.additionalInformation" class="form-control"></textarea>
         </div>
       </div>
 
       <div class="form-group row">
         <label for="phone" class="col-form-label col-sm-2">Phone</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.address.telephone" name="phone">
+          <input type="text" class="form-control" [(ngModel)]="provider.address.telephone" name="phone">
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-sm-6">
-            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
-        </div>
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!provider.id else elseBlock">Save</button>
 
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
+          </ng-template>
+
+        </div>
       </div>
+
+
     </form>
   </div>
 </div>

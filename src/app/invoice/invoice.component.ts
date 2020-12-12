@@ -74,7 +74,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   generate(): void{
-    this.invoiceService.generate(100,200).subscribe(
+    this.invoiceService.generate().subscribe(
       response => {
         Swal.fire(response.title, response.message,  'success');
       },err => {
@@ -83,7 +83,9 @@ export class InvoiceComponent implements OnInit {
     )
   }
 
-
+  modalOpen(){
+    this.invoiceService.modalOpen();
+  }
 
 
 

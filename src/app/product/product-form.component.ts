@@ -8,14 +8,12 @@ import { Product } from '../model/product';
 import { Provider } from '../model/provider';
 import { IvaType } from '../model/iva-type.enum';
 import { ProductService } from '../services/product.service';
-
-
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html'
-
 })
 export class ProductFormComponent implements OnInit {
 
@@ -48,7 +46,6 @@ export class ProductFormComponent implements OnInit {
         }
       }
 
-
       this.filteredProvidersName = this.providerNameControl.valueChanges
         .pipe(
           map(value => typeof value === 'string' ? value : value.name),
@@ -64,10 +61,9 @@ export class ProductFormComponent implements OnInit {
           .subscribe((product) => {
             this.product = product;
             this.titulo = 'Actualizar Producto';
-            console.log(product);
           },
            err => {
-             this.router.navigate(['/logistics'])
+             this.router.navigate(['/product'])
              Swal.fire(err.error.error, err.error.message, 'error');
             });
       }
@@ -75,10 +71,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   create(): void{
-    console.log(this.product);
     this.productService.create(this.product)
     .subscribe( response => {
-      this.router.navigate(['/logistics'])
+      this.router.navigate(['/product'])
       Swal.fire(response.title, response.message,  'success');
     },
     err => {
@@ -93,7 +88,7 @@ export class ProductFormComponent implements OnInit {
   update():void{
     this.productService.update(this.product)
     .subscribe ( response => {
-      this.router.navigate(['/logistics'])
+      this.router.navigate(['/product'])
       Swal.fire(response.title, response.message,  'success');
     },
     err => {
@@ -106,20 +101,17 @@ export class ProductFormComponent implements OnInit {
   }
 
   private _filterProviderName(value: string): Observable<Provider[]> {
-    console.log('_filterProviderName');
     const filterValue = value.toLowerCase();
     return this.productService.getProviderName(filterValue);
   }
 
   selectProvider(event: MatAutocompleteSelectedEvent): void {
     let provider = event.option.value as Provider;
-    this.provider.id = provider.id;
-    this.provider.name = provider.name;
+    this.product.provider.id = provider.id;
+    this.product.provider.name = provider.name;
     this.providerNameControl.setValue('');
     event.option.focus();
     event.option.deselect();
   }
-
-
 
 }

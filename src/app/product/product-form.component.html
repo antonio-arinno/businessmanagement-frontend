@@ -37,6 +37,7 @@
           <input type="text" class="form-control" [(ngModel)]="product.code" name="code">
         </div>
       </div>
+
       <div class="form-group row">
         <label for="description" class="col-form-label col-sm-2">Description</label>
         <div class="col-sm-6">
@@ -53,9 +54,11 @@
       <div class="form-group row">
         <label for="iva" class="col-form-label col-sm-2">Iva</label>
 
-        <select class="form-control" name="ivaType" [(ngModel)]="product.ivaType">
-          <option *ngFor="let ivaType of ivaTypes" [value]="ivaType.value">{{ivaType.text}}</option>
-        </select>
+        <div class="col-sm-6">
+          <select class="form-control" name="ivaType" [(ngModel)]="product.ivaType">
+            <option *ngFor="let ivaType of ivaTypes" [value]="ivaType.value">{{ivaType.text}}</option>
+          </select>
+        </div>
 
       </div>
 

@@ -16,7 +16,6 @@ export class CompanyService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getCompany(): Observable<Company>{
-    console.log('getCompany');
     return this.http.get<Company>(`${this.urlEndPoint}`).pipe(
       catchError(e => {
         if(e.status != 401 && e.error.messaje){

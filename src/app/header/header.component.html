@@ -12,9 +12,23 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['./customer']">Customer</a>
       </li>
+
+      <li class="nav-item dropdown" routerLinkActive="active">
+         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Logistics
+         </a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" [routerLink]="['./product']">Product</a>
+           <a class="dropdown-item" [routerLink]="['./provider']">Provider</a>
+         </div>
+      </li>
+
+<!--
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['./logistics']">Logistics</a>
       </li>
+-->
+
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['./order']">Order</a>
       </li>

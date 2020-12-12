@@ -14,9 +14,7 @@ import { AuthGuard } from './user/guard/auth.guard';
 import { RoleGuard } from './user/guard/role.guard';
 import { TokenInterceptor } from './user/interceptor/token.interceptor';
 import { AuthInterceptor } from './user/interceptor/auth.interceptor';
-import { LogisticsComponent } from './logistics/logistics.component';
 import { CompanyComponent } from './company/company.component';
-import { ProductFormComponent } from './logistics/product-form.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceFormComponent } from './invoice/invoice-form.component';
 import { InvoiceViewComponent } from './invoice/invoice-view.component';
@@ -32,6 +30,11 @@ import { OrderViewComponent } from './order/order-view.component';
 import { InvoiceGenerateComponent } from './invoice/invoice-generate.component';
 import { ExternalDataComponent } from './external-data/external-data.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { ProviderComponent } from './provider/provider.component';
+import { ProviderFormComponent } from './provider/provider-form.component';
+import { ProductComponent } from './product/product.component';
+import { ProductFormComponent } from './product/product-form.component';
+
 
 
 
@@ -42,11 +45,22 @@ const routes: Routes = [
   { path: 'customer/page/:page', component: CustomerComponent},
   { path: 'customer/form', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'customer/form/:id', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
-
+/*
   { path: 'logistics', component: LogisticsComponent},
   { path: 'product/page/:page', component: LogisticsComponent},
   { path: 'product/form', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
   { path: 'product/form/:id', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
+*/
+
+  { path: 'product', component: ProductComponent},
+  { path: 'product/page/:page', component: ProductComponent},
+  { path: 'product/form', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
+  { path: 'product/form/:id', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
+
+  { path: 'provider', component: ProviderComponent},
+  { path: 'provider/page/:page', component: ProviderComponent},
+  { path: 'provider/form', component: ProviderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'provider/form/:id', component: ProviderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
 
   { path: 'order', component: OrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'order/page/:page', component: OrderComponent},
@@ -74,9 +88,7 @@ const routes: Routes = [
     CustomerComponent,
     LoginComponent,
     CustomerFormComponent,
-    LogisticsComponent,
     CompanyComponent,
-    ProductFormComponent,
     InvoiceComponent,
     InvoiceFormComponent,
     InvoiceViewComponent,
@@ -85,7 +97,11 @@ const routes: Routes = [
     OrderViewComponent,
     InvoiceGenerateComponent,
     ExternalDataComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ProviderComponent,
+    ProviderFormComponent,
+    ProductComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

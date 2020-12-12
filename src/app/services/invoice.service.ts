@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Invoice } from '../model/invoice';
-import { Product } from '../model/product';
-import { Customer } from '../model/customer';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Invoice } from '../model/invoice';
+import { Product } from '../model/product';
+import { Customer } from '../model/customer';
+import { IdDates } from '../model/id-dates';
+import { DateRange } from '../model/date-range';
 import { URL_BACKEND } from '../config/config';
 
 @Injectable({
@@ -13,6 +15,8 @@ import { URL_BACKEND } from '../config/config';
 export class InvoiceService {
 
   private urlEndPoint: string = URL_BACKEND + '/api/invoices';
+
+  public modal: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -85,8 +89,24 @@ export class InvoiceService {
     );
   }
 
-  generate(id: number, id2: number): Observable<any>{
-    return this.http.get(`${this.urlEndPoint}/generate/${id}&${id2}`).pipe(
+  generate(): Observable<any>{
+    return this.http.get(`${this.urlEndPoint}/generate`).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
+  }
+
+  selectionGenerate(idDates: IdDates): Observable<any>{
+    return this.http.post<IdDates>(`${this.urlEndPoint}/generate/id-dates`, idDates).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
+  }
+
+  dateSelectionGenerate(dateRange: DateRange): Observable<any>{
+    return this.http.post<IdDates>(`${this.urlEndPoint}/generate/dates`, dateRange).pipe(
       catchError(e => {
         return throwError(e);
       })
@@ -97,8 +117,25 @@ export class InvoiceService {
     return this.http.get(`${this.urlEndPoint}/pdf/${id}`, { responseType : 'blob'  });
   }
 
+  getCustomersName(term: string): Observable<Customer[]>{
+    return this.http.get(`${this.urlEndPoint}/load-customer-name/${term}`).pipe(
+      map ( response => {
+        let customer = response as Customer[];
+        return customer.map(customer => {
+            return customer;
+        });
+      }
+    )
+    );
+  }
 
+  modalOpen(){
+    this.modal = true;
+  }
 
+  modalClose(){
+    this.modal = false;
+  }
 
 
 

@@ -179,7 +179,6 @@ export class OrderFormComponent implements OnInit {
   }
 
   create(): void{
-    console.log(this.order);
     this.orderService.create(this.order)
     .subscribe( response => {
       this.order.number = response.order.number;

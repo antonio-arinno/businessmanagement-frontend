@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../services/product.service';
-import { Product } from '../model/product';
+import { ProviderService } from '../services/provider.service';
+import { Provider } from '../model/provider';
 import { AuthService } from '../user/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-logistics',
-  templateUrl: './logistics.component.html'
+  selector: 'app-provider',
+  templateUrl: './provider.component.html'
 })
-export class LogisticsComponent implements OnInit {
+export class ProviderComponent implements OnInit {
 
-  products: Product[];
+  providers: Provider[];
   paginator: any;
-  component= '/product';
+  component= '/provider';
 
-  constructor(private productService: ProductService,
+  constructor(private providerService: ProviderService,
               private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
 
@@ -25,16 +25,16 @@ export class LogisticsComponent implements OnInit {
       if(!page){
         page = 0;
       }
-      this.productService.getProducts(page).subscribe(
+      this.providerService.getProviders(page).subscribe(
         response => {
-          this.products = response.content as Product[];
+          this.providers = response.content as Provider[];
           this.paginator = response;
         });
       }
     );
   }
 
-  delete(product: Product): void {
+  delete(provider: Provider): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -46,9 +46,9 @@ export class LogisticsComponent implements OnInit {
     }).then((result) => {
 
       if (result.value) {
-        this.productService.delete(product.id).subscribe(
+        this.providerService.delete(provider.id).subscribe(
           response => {
-            this.products = this.products.filter(pro => pro !== product)
+            this.providers = this.providers.filter(pro => pro !== provider)
             Swal.fire(response.title , response.message,  'success');
         },err => {
           Swal.fire(err.error.error, err.error.message, 'error')
@@ -57,5 +57,26 @@ export class LogisticsComponent implements OnInit {
       }
     })
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

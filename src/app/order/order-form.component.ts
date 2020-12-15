@@ -107,7 +107,7 @@ export class OrderFormComponent implements OnInit {
     } else {
       let orderItem = new OrderItem();
       orderItem.product = product;
-      orderItem.price = product.price;
+      orderItem.price = product.salePrice;
       orderItem.iva = this.iva.getIva(product.ivaType);
       orderItem.ivaType = product.ivaType;
       this.order.items.push(orderItem);
@@ -174,11 +174,34 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
+  updatePrice(id: number, event: any): void {
+    let price: number = event.target.value as number;
+
+    this.order.items = this.order.items.map((item: OrderItem) => {
+      if (id === item.product.id) {
+        item.price = price;
+      }
+      return item;
+    });
+  }
+
+  updateLot(id: number, event: any): void {
+    let lot: string = event.target.value as string;
+
+    this.order.items = this.order.items.map((item: OrderItem) => {
+      if (id === item.product.id) {
+        item.lot = lot;
+      }
+      return item;
+    });
+  }
+
   deleteOrderItem(id: number): void {
     this.order.items = this.order.items.filter((item: OrderItem) => id !== item.product.id);
   }
 
   create(): void{
+    console.log(this.order);
     this.orderService.create(this.order)
     .subscribe( response => {
       this.order.number = response.order.number;
@@ -239,7 +262,6 @@ export class OrderFormComponent implements OnInit {
       console.log(this.order);
       this.order = new Order();
       this.order.customer = new Customer();
-      console.log(this.order);
   }
 
 

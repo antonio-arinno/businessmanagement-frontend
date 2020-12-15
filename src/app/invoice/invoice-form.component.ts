@@ -102,7 +102,7 @@ export class InvoiceFormComponent implements OnInit {
     } else {
       let invoiceItem = new InvoiceItem();
       invoiceItem.product = product;
-      invoiceItem.price = product.price;
+      invoiceItem.price = product.salePrice;
       this.invoice.items.push(invoiceItem);
     }
 
@@ -149,7 +149,7 @@ export class InvoiceFormComponent implements OnInit {
   getTotal():number {
     let total: number = 0;
     this.invoice.items.forEach((item: InvoiceItem) => {
-      total += item.product.price * item.quantity;
+      total += item.product.salePrice * item.quantity;
     });
     return total;
   }

@@ -129,6 +129,7 @@ export class OrderService {
         itemTemp.quantity = item.quantity;
         itemTemp.iva = item.iva;
         itemTemp.ivaType = item.ivaType;
+        itemTemp.lot = item.lot;
         setOrder.items.push(itemTemp)
     }
     return setOrder;

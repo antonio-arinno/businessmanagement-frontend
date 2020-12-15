@@ -1,5 +1,6 @@
 import { Customer } from './customer';
 import { OrderItem } from './order-item';
+import { Invoice } from './invoice';
 
 
 export class Order {
@@ -8,6 +9,7 @@ export class Order {
   number: number;
   customer: Customer;
   createAt: string;
+  invoice: Invoice;
   observation: string;
   items: Array<OrderItem> = [];
 

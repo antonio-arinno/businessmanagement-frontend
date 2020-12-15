@@ -10,7 +10,7 @@ export class OrderItem {
   quantity: number = 1;
   iva: number;
   ivaType: IvaType;
-
+  lot: string;
 
   public getAmount(): number {
     return Math.round(((this.price - (this.price * (this.discount/100))) * this.quantity) * 100)/100

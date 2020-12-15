@@ -10,7 +10,7 @@ export class InvoiceItem {
   observation: string;
 
   public getAmount():number {
-    return this.product.price * this.quantity;
+    return this.product.salePrice * this.quantity;
   }
 
 }

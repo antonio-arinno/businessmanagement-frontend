@@ -7,6 +7,6 @@ export class Product {
   provider: Provider;
   code: string;
   description: string;
-  price: number;
+  salePrice: number;
   ivaType: IvaType;
 }

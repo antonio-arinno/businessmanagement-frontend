@@ -5,12 +5,18 @@
 </ul>
 
 <div class="card border-primary mb-3">
-  <div class="card-header">{{titulo}} {{order.number}}</div>
+  <div class="card-header">
+    {{titulo}} {{order.number}}
+<!--    <a [routerLink]="['/order']" class=" float-right btn btn-primary">&laquo; volver</a> -->
+    <a [routerLink]="['/order']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+  </div>
+
   <div class="card-body">
+<!--
     <h4 class="card-title">
       <a [routerLink]="['/order']" class="btn btn-light btn-xs">&laquo; volver</a>
     </h4>
-
+-->
     <form #orderForm="ngForm">
 
       <div class="form-group row">
@@ -101,20 +107,22 @@
       <table class="table table-striped table-hover table-sm" *ngIf="order.items.length > 0">
         <thead>
           <tr>
-            <th>Producto</th>
+            <th style="width:300px">Producto</th>
+            <th>Lote</th>
             <th>Precio</th>
             <th>Descuento</th>
             <th>Cantidad</th>
             <th>Total</th>
-            <th>Eliminar</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of order.items">
             <td>{{item.product.description}}</td>
-            <td>{{item.price}}</td>
-            <td><input type="number" value="{{item.discount}}" class="form-control col-sm-4" (change)="updateDiscount(item.product.id, $event)"></td>
-            <td><input type="number" value="{{item.quantity}}" class="form-control col-sm-4" (change)="updateQuantity(item.product.id, $event)"></td>
+            <td><input type="text" value="{{item.lot}}" class="form-control" (change)="updateLot(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.price}}" class="form-control" (change)="updatePrice(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.discount}}" class="form-control" (change)="updateDiscount(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.quantity}}" class="form-control" (change)="updateQuantity(item.product.id, $event)"></td>
             <td>{{item.getAmount()}}</td>
             <td><button class="btn btn-danger btn-sm" type="button"
               (click)="deleteOrderItem(item.product.id)">x</button></td>

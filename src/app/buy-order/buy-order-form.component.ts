@@ -1,80 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OrderService } from '../services/order.service';
-import { Order } from '../model/order';
-import { OrderItem } from '../model/order-item';
-import { Customer } from '../model/customer';
-import { Product } from '../model/product';
-import { Iva } from '../model/iva';
-import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { BuyOrderService } from '../services/buy-order.service';
+import { Provider } from '../model/provider';
+import { BuyOrder } from '../model/buy-order';
+import { BuyOrderItem } from '../model/buy-order-item';
+import { Product } from '../model/product';
+import { Iva } from '../model/iva';
+import { FormControl } from '@angular/forms';
+
 import Swal from 'sweetalert2';
 
-
 @Component({
-  selector: 'app-order-form',
-  templateUrl: './order-form.component.html'
+  selector: 'app-buy-order-form',
+  templateUrl: './buy-order-form.component.html'
 })
-export class OrderFormComponent implements OnInit {
+export class BuyOrderFormComponent implements OnInit {
 
-  titulo: string = 'New Order';
-  order: Order = new Order();
-  customer: Customer = new Customer();
+  titulo: string = 'Nuevo Pedido de Compra';
+  buyOrder: BuyOrder = new BuyOrder();
+  provider: Provider = new Provider();
   iva: Iva = new Iva();
-
   errores: string[];
+  providers: Provider[] = [];
 
-  customers: Customer[] = [];
-
-  customerCodeControl = new FormControl();
-  filteredCustomersCode: Observable<Customer[]>;
-
-  customerControl = new FormControl();
-  filteredCustomers: Observable<Customer[]>;
+  providerNameControl = new FormControl();
+  filteredProvidersName: Observable<Provider[]>;
 
   productControl = new FormControl();
   filteredProducts: Observable<Product[]>;
 
-  constructor(private orderService: OrderService,
+  constructor(private buyOrderService: BuyOrderService,
               private router: Router,
-              private activateRoute: ActivatedRoute){
-    this.order.customer = this.customer;
+              private activateRoute: ActivatedRoute) {
+
+    this.buyOrder.provider = this.provider;
+
   }
 
   ngOnInit(): void {
-
-    this.loadOrder();
-
+    this.loadBuyOrder();
     this.filteredProducts = this.productControl.valueChanges
       .pipe(
         map(value => typeof value === 'string' ? value : value.description),
         flatMap(value => value ? this._filter(value) : [])
       );
 
-    this.filteredCustomers = this.customerControl.valueChanges
-      .pipe(
-        map(value => typeof value === 'string' ? value : value.name),
-        flatMap(value => value ? this._filterCustomer(value) : [])
-      );
-
-    this.filteredCustomersCode = this.customerCodeControl.valueChanges
+    this.filteredProvidersName = this.providerNameControl.valueChanges
       .pipe(
         map(value => typeof value === 'string' ? value : value.code),
-        flatMap(value => value ? this._filterCustomerCode(value) : [])
+        flatMap(value => value ? this._filterProviderName(value) : [])
       );
   }
 
-  loadOrder(): void{
+  private _filter(value: string): Observable<Product[]> {
+    const filterValue = value.toLowerCase();
+    console.log(this.buyOrder.provider);
+    return this.buyOrderService.getProducts(this.buyOrder.provider.id, filterValue);
+  }
+
+
+  private _filterProviderName(value: string): Observable<Provider[]> {
+    const filterValue = value.toLowerCase();
+    return this.buyOrderService.getProviderName(filterValue);
+  }
+
+  loadBuyOrder(): void{
     this.activateRoute.params.subscribe(params => {
       let id = params['id']
       if(id){
-        this.orderService.getOrder(id)
+        this.buyOrderService.getBuyOrder(id)
           .subscribe((order) => {
-            this.order = this.orderService.setOrder(order);
-            this.titulo = 'Actualizar Orden';
-            console.log(this.order)
+            this.buyOrder = this.buyOrderService.setBuyOrder(order);
+            this.titulo = 'Actualizar Orden Pedido de Compra';
           },
            err => {
              this.router.navigate(['/order'])
@@ -84,19 +84,14 @@ export class OrderFormComponent implements OnInit {
     })
   }
 
-  private _filter(value: string): Observable<Product[]> {
-    const filterValue = value.toLowerCase();
-    return this.orderService.getProducts(filterValue);
-  }
-
-  private _filterCustomer(value: string): Observable<Customer[]> {
-    const filterValue = value.toLowerCase();
-    return this.orderService.getCustomers(filterValue);
-  }
-
-  private _filterCustomerCode(value: string): Observable<Customer[]> {
-    const filterValue = value.toLowerCase();
-    return this.orderService.getCustomersCode(filterValue);
+  selectProvider(event: MatAutocompleteSelectedEvent): void {
+    let provider = event.option.value as Provider;
+    this.buyOrder.provider.id = provider.id;
+    this.buyOrder.provider.name = provider.name;
+    this.buyOrder.provider.code = provider.code;
+    this.providerNameControl.setValue('');
+    event.option.focus();
+    event.option.deselect();
   }
 
   selectProduct(event: MatAutocompleteSelectedEvent): void {
@@ -105,14 +100,13 @@ export class OrderFormComponent implements OnInit {
     if (this.existsItem(product.id)) {
       this.increaseQuantity(product.id);
     } else {
-      let orderItem = new OrderItem();
-      orderItem.product = product;
-      orderItem.price = product.salePrice;
-      orderItem.iva = this.iva.getIva(product.ivaType);
-      orderItem.ivaType = product.ivaType;
-      this.order.items.push(orderItem);
+      let buyOrderItem = new BuyOrderItem();
+      buyOrderItem.product = product;
+      buyOrderItem.price = product.buyPrice;
+      buyOrderItem.iva = this.iva.getIva(product.ivaType);
+      buyOrderItem.ivaType = product.ivaType;
+      this.buyOrder.items.push(buyOrderItem);
     }
-
     this.productControl.setValue('');
     event.option.focus();
     event.option.deselect();
@@ -120,7 +114,7 @@ export class OrderFormComponent implements OnInit {
 
   existsItem(id: number): boolean {
     let exists = false;
-    this.order.items.forEach((item: OrderItem) => {
+    this.buyOrder.items.forEach((item: BuyOrderItem) => {
       if (id === item.product.id) {
         exists = true;
       }
@@ -129,7 +123,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   increaseQuantity(id: number): void {
-    this.order.items = this.order.items.map((item: OrderItem) => {
+    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         ++item.quantity;
       }
@@ -137,25 +131,14 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  selectCustomer(event: MatAutocompleteSelectedEvent): void {
-    let customer = event.option.value as Customer;
-    this.order.customer.id = customer.id;
-    this.order.customer.name = customer.name;
-    this.order.customer.code = customer.code;
-    this.customerControl.setValue('');
-    this.customerCodeControl.setValue('');
-    event.option.focus();
-    event.option.deselect();
-  }
-
   updateQuantity(id: number, event: any): void {
     let quantity: number = event.target.value as number;
 
     if (quantity == 0) {
-      return this.deleteOrderItem(id);
+      return this.deleteBuyOrderItem(id);
     }
 
-    this.order.items = this.order.items.map((item: OrderItem) => {
+    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         item.quantity = quantity;
       }
@@ -165,8 +148,7 @@ export class OrderFormComponent implements OnInit {
 
   updateDiscount(id: number, event: any): void {
     let discount: number = event.target.value as number;
-
-    this.order.items = this.order.items.map((item: OrderItem) => {
+    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         item.discount = discount;
       }
@@ -176,8 +158,7 @@ export class OrderFormComponent implements OnInit {
 
   updatePrice(id: number, event: any): void {
     let price: number = event.target.value as number;
-
-    this.order.items = this.order.items.map((item: OrderItem) => {
+    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         item.price = price;
       }
@@ -187,8 +168,7 @@ export class OrderFormComponent implements OnInit {
 
   updateLot(id: number, event: any): void {
     let lot: string = event.target.value as string;
-
-    this.order.items = this.order.items.map((item: OrderItem) => {
+    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         item.lot = lot;
       }
@@ -196,15 +176,16 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  deleteOrderItem(id: number): void {
-    this.order.items = this.order.items.filter((item: OrderItem) => id !== item.product.id);
+  deleteBuyOrderItem(id: number): void {
+    this.buyOrder.items = this.buyOrder.items.filter((item: BuyOrderItem) => id !== item.product.id);
   }
 
   create(): void{
-    this.orderService.create(this.order)
+    this.buyOrderService.create(this.buyOrder)
     .subscribe( response => {
-      this.order.number = response.order.number;
-      this.order.id = response.order.id;
+      console.log(response.buyOrder);
+      this.buyOrder.number = response.buyOrder.number;
+      this.buyOrder.id = response.buyOrder.id;
       Swal.fire(response.title, response.message,  'success');
     },
     err => {
@@ -217,7 +198,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   update():void{
-    this.orderService.update(this.order)
+    this.buyOrderService.update(this.buyOrder)
     .subscribe ( order => {
       Swal.fire('Orden Actualizado', 'Orden actualizada con exito', 'success')
     },
@@ -232,7 +213,7 @@ export class OrderFormComponent implements OnInit {
 
 
   pdf(): void {
-    this.orderService.pdf(this.order.id).subscribe(
+    this.buyOrderService.pdf(this.buyOrder.id).subscribe(
       response => {
         const blob = new Blob([response], {type: 'application/pdf'});
         if (window.navigator && window.navigator.msSaveOrOpenBlob){
@@ -242,7 +223,7 @@ export class OrderFormComponent implements OnInit {
         const data = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = data;
-        link.download = `Ord_${this.order.number}_${this.order.customer.code}.pdf`;
+        link.download = `Alb_Compra_${this.buyOrder.number}_${this.buyOrder.provider.code}.pdf`;
         link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view:window}));
         setTimeout(function() {
           window.URL.revokeObjectURL(data);
@@ -256,9 +237,12 @@ export class OrderFormComponent implements OnInit {
   }
 
   new():void{
-      this.order = new Order();
-      this.order.customer = new Customer();
+      this.buyOrder = new BuyOrder();
+      this.buyOrder.provider = new Provider();
   }
 
 
-  }
+
+
+
+}

@@ -86,6 +86,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   update():void{
+    console.log(this.product);
     this.productService.update(this.product)
     .subscribe ( response => {
       this.router.navigate(['/product'])

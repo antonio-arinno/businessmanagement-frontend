@@ -1,0 +1,56 @@
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Pedido de Compra</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">List of orders</h5>
+
+    <div class="my-2 text-left">
+      <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/buy-order/form']" >Create Order</buttom>
+    </div>
+    <div *ngIf="buyOrders?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="buyOrders?.length>0">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit/view</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let buyOrder of buyOrders">
+          <td>{{ buyOrder.number }}</td>
+          <td>{{ buyOrder.provider.name }}</td>
+          <td>{{ buyOrder.createAt }}</td>
+          <td>{{ buyOrder.total | number:'1.2-2' }}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="button" [routerLink]="['/buy-order/form', buyOrder.id]"
+                    class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
+              Edit
+            </button>
+
+            <button type="button" name="button" [routerLink]="['/buy-order/view',buyOrder.id]"
+                    class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
+              View
+            </button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="delete" (click)='delete(buyOrder)' class="btn btn-danger btn-sm">
+              delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]= "paginator">
+
+    </paginator-nav>
+
+  </div>
+</div>

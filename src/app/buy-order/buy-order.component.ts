@@ -1,34 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
-import { OrderService } from '../services/order.service';
-import { Order } from '../model/order';
+import { BuyOrderService } from '../services/buy-order.service';
+import { BuyOrder } from '../model/buy-order';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html'
+  selector: 'app-buy-order',
+  templateUrl: './buy-order.component.html'
 })
-export class OrderComponent implements OnInit {
+export class BuyOrderComponent implements OnInit {
 
-  orders: Order[];
+  buyOrders: BuyOrder[];
   paginator: any;
-  component= '/order';
+  component= '/buy-order';
 
-  constructor(private orderService: OrderService,
+
+  constructor(private buyOrderService: BuyOrderService,
               private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
-
-/*
-  ngOnInit(): void {
-    this.orderService.getOrders().subscribe(
-      orders => this.orders = orders,
-      err =>{
-        Swal.fire(err.error.error, err.error.message, 'error')
-      }
-    );
-  }
-*/
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe( params => {
@@ -36,17 +26,17 @@ export class OrderComponent implements OnInit {
       if(!page){
         page = 0;
       }
-      this.orderService.getOrders(page).subscribe(
+      this.buyOrderService.getBuyOrders(page).subscribe(
         response => {
-          this.orders = response.content as Order[];
-          console.log(this.orders);
+          this.buyOrders = response.content as BuyOrder[];
+          console.log(this.buyOrders);
           this.paginator = response;
         });
       }
     );
   }
 
-  delete(order: Order): void {
+  delete(buyOrder: BuyOrder): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -57,9 +47,9 @@ export class OrderComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.orderService.delete(order.id).subscribe(
+        this.buyOrderService.delete(buyOrder.id).subscribe(
           response => {
-            this.orders = this.orders.filter(ord => ord !== order)
+            this.buyOrders = this.buyOrders.filter(ord => ord !== buyOrder)
             Swal.fire(response.title, response.message,  'success');
         },err => {
           Swal.fire(err.error.error, err.error.message, 'error')
@@ -68,5 +58,7 @@ export class OrderComponent implements OnInit {
       }
     })
   }
+
+
 
 }

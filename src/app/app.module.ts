@@ -34,6 +34,8 @@ import { ProviderComponent } from './provider/provider.component';
 import { ProviderFormComponent } from './provider/provider-form.component';
 import { ProductComponent } from './product/product.component';
 import { ProductFormComponent } from './product/product-form.component';
+import { BuyOrderComponent } from './buy-order/buy-order.component';
+import { BuyOrderFormComponent } from './buy-order/buy-order-form.component';
 
 
 
@@ -45,12 +47,6 @@ const routes: Routes = [
   { path: 'customer/page/:page', component: CustomerComponent},
   { path: 'customer/form', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'customer/form/:id', component: CustomerFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
-/*
-  { path: 'logistics', component: LogisticsComponent},
-  { path: 'product/page/:page', component: LogisticsComponent},
-  { path: 'product/form', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
-  { path: 'product/form/:id', component: ProductFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
-*/
 
   { path: 'product', component: ProductComponent},
   { path: 'product/page/:page', component: ProductComponent},
@@ -61,6 +57,11 @@ const routes: Routes = [
   { path: 'provider/page/:page', component: ProviderComponent},
   { path: 'provider/form', component: ProviderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'provider/form/:id', component: ProviderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
+
+  { path: 'buy-order', component: BuyOrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'buy-order/page/:page', component: BuyOrderComponent},
+  { path: 'buy-order/form', component: BuyOrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'buy-order/form/:id', component: BuyOrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'order', component: OrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'order/page/:page', component: OrderComponent},
@@ -101,7 +102,9 @@ const routes: Routes = [
     ProviderComponent,
     ProviderFormComponent,
     ProductComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    BuyOrderComponent,
+    BuyOrderFormComponent
   ],
   imports: [
     BrowserModule,

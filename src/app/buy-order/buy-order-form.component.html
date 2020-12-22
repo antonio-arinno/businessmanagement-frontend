@@ -1,0 +1,125 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+  {{ err }}
+  </li>
+</ul>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    {{titulo}} {{buyOrder.number}}
+    <a [routerLink]="['/buy-order']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+  </div>
+
+  <div class="card-body">
+    <form #orderForm="ngForm">
+
+      <div class="form-group row">
+        <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+        <div class="col-sm-6">
+          <input [matDatepicker]="myDatepicker" class="form-control"
+              [(ngModel)]="buyOrder.createAt" name="createAt" style="display:inline; width:300px;">
+          <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="cliente" class="col-sm-2 col-form-label">Proveedor</label>
+        <div class="col-sm-4">
+          <input type="text"
+          [formControl]="providerNameControl"
+          [matAutocomplete]="providerNameAuto"
+          class="form-control">
+          <mat-autocomplete #providerNameAuto="matAutocomplete"
+                            (optionSelected)="selectProvider($event)">
+              <mat-option *ngFor="let provider of filteredProvidersName | async" [value]="provider">
+                {{provider.name}}
+              </mat-option>
+          </mat-autocomplete>
+        </div>
+
+          <div class="col-sm-6">
+            <input type="text" [(ngModel)]="buyOrder.provider.name" class="form-control" name="name" disabled>
+          </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label for="observacion" class="col-sm-2 col-form-label">Observación</label>
+        <div class="col-sm-10">
+          <textarea name="observacion" [(ngModel)]="buyOrder.observation" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+
+          <mat-form-field class="col-sm-6">
+            <input type="text" placeholder="Añadir producto"
+                                aria-label="Productos"
+                                matInput
+                                [formControl]="productControl"
+                                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected)="selectProduct($event)">
+              <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                {{product.description}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="productControl.invalid && orderForm.submitted">
+            La orden no puede no tener líneas!.
+          </div>
+      </div>
+
+      <div class="alert alert-info my-4" *ngIf="buyOrder.items.length == 0">
+        No hay líneas asignadas para la orden. Debe agregar al menos una!
+      </div>
+
+      <table class="table table-striped table-hover table-sm" *ngIf="buyOrder.items.length > 0">
+        <thead>
+          <tr>
+            <th style="width:300px">Producto</th>
+            <th>Lote</th>
+            <th>Precio</th>
+            <th>Descuento</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of buyOrder.items">
+            <td>{{item.product.description}}</td>
+            <td><input type="text" value="{{item.lot}}" class="form-control" (change)="updateLot(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.price}}" class="form-control" (change)="updatePrice(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.discount}}" class="form-control" (change)="updateDiscount(item.product.id, $event)"></td>
+            <td><input type="number" value="{{item.quantity}}" class="form-control" (change)="updateQuantity(item.product.id, $event)"></td>
+            <td>{{item.getAmount()}}</td>
+            <td><button class="btn btn-danger btn-sm" type="button"
+              (click)="deleteBuyOrderItem(item.product.id)">x</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h5 class="float-right" *ngIf="buyOrder.items.length > 0">Total: <span class="badge badge-secondary">{{buyOrder.getTotal()}}</span></h5>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <div *ngIf="!buyOrder.number else elseBlock">
+              <button class="btn btn-primary" role="button" (click)='create()'>Save</button>
+          </div>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' style="margin-right: 1px; margin-left: 1px">Update</button>
+            <button class="btn btn-primary" role="button" (click)='pdf()' style="margin-right: 1px; margin-left: 1px">PDF</button>
+            <button class="btn btn-primary" role="button" (click)='new()' style="margin-right: 1px; margin-left: 1px">New Order</button>
+          </ng-template>
+
+        </div>
+      </div>
+
+
+    </form>
+
+  </div>
+</div>

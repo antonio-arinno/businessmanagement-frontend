@@ -74,7 +74,6 @@ export class OrderFormComponent implements OnInit {
           .subscribe((order) => {
             this.order = this.orderService.setOrder(order);
             this.titulo = 'Actualizar Orden';
-            console.log(this.order)
           },
            err => {
              this.router.navigate(['/order'])
@@ -101,18 +100,21 @@ export class OrderFormComponent implements OnInit {
 
   selectProduct(event: MatAutocompleteSelectedEvent): void {
     let product = event.option.value as Product;
-
     if (this.existsItem(product.id)) {
       this.increaseQuantity(product.id);
     } else {
       let orderItem = new OrderItem();
+      this.orderService.getLots(product).
+        subscribe(lots => {
+          orderItem.lots = lots
+          orderItem.lot = lots[0];
+        });
       orderItem.product = product;
       orderItem.price = product.salePrice;
       orderItem.iva = this.iva.getIva(product.ivaType);
       orderItem.ivaType = product.ivaType;
       this.order.items.push(orderItem);
     }
-
     this.productControl.setValue('');
     event.option.focus();
     event.option.deselect();
@@ -218,8 +220,8 @@ export class OrderFormComponent implements OnInit {
 
   update():void{
     this.orderService.update(this.order)
-    .subscribe ( order => {
-      Swal.fire('Orden Actualizado', 'Orden actualizada con exito', 'success')
+    .subscribe ( response => {
+      Swal.fire(response.title, response.message,  'success')
     },
     err => {
       if(!err.error.errors){

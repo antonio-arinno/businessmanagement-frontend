@@ -36,9 +36,9 @@ import { ProductComponent } from './product/product.component';
 import { ProductFormComponent } from './product/product-form.component';
 import { BuyOrderComponent } from './buy-order/buy-order.component';
 import { BuyOrderFormComponent } from './buy-order/buy-order-form.component';
-
-
-
+import { OrderInputComponent } from './order-input/order-input.component';
+import { OrderInputFormComponent } from './order-input/order-input-form.component';
+import { BuyOrderViewComponent } from './buy-order/buy-order-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/customer', pathMatch: 'full' },
@@ -62,6 +62,13 @@ const routes: Routes = [
   { path: 'buy-order/page/:page', component: BuyOrderComponent},
   { path: 'buy-order/form', component: BuyOrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'buy-order/form/:id', component: BuyOrderFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'buy-order/view/:id', component: BuyOrderViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
+
+  { path: 'order-input', component: OrderInputComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'order-input/page/:page', component: OrderInputComponent},
+  { path: 'order-input/form/:id', component: OrderInputFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
 
   { path: 'order', component: OrderComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'order/page/:page', component: OrderComponent},
@@ -104,7 +111,10 @@ const routes: Routes = [
     ProductComponent,
     ProductFormComponent,
     BuyOrderComponent,
-    BuyOrderFormComponent
+    BuyOrderFormComponent,
+    OrderInputComponent,
+    OrderInputFormComponent,
+    BuyOrderViewComponent
   ],
   imports: [
     BrowserModule,

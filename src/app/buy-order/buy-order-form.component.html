@@ -90,7 +90,7 @@
         <tbody>
           <tr *ngFor="let item of buyOrder.items">
             <td>{{item.product.description}}</td>
-            <td><input type="text" value="{{item.lot}}" class="form-control" (change)="updateLot(item.product.id, $event)"></td>
+            <td>{{item.lot}}</td>
             <td><input type="number" value="{{item.price}}" class="form-control" (change)="updatePrice(item.product.id, $event)"></td>
             <td><input type="number" value="{{item.discount}}" class="form-control" (change)="updateDiscount(item.product.id, $event)"></td>
             <td><input type="number" value="{{item.quantity}}" class="form-control" (change)="updateQuantity(item.product.id, $event)"></td>
@@ -117,7 +117,6 @@
 
         </div>
       </div>
-
 
     </form>
 

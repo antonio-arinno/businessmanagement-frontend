@@ -1,0 +1,36 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Entrada de Productos</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado pedidos pendientes</h5>
+
+    <div *ngIf="buyOrders?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="buyOrders?.length>0">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let buyOrder of buyOrders">
+          <td>
+            <a [routerLink]="['/order-input/form', buyOrder.id]" class="link">{{ buyOrder.number }}</a>
+          <td>{{ buyOrder.provider.name }}</td>
+          <td>{{ buyOrder.createAt }}</td>
+          <td>{{ buyOrder.total | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]= "paginator">
+
+    </paginator-nav>
+
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="card bg-light" *ngIf="buyOrder" >
+  <div class="card-header">
+    {{titulo}} {{buyOrder.number}}
+    <a [routerLink]="['/order-input']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+  </div>
+
+  <div class="card-body">
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos del proveedor</li>
+      <li class="list-group-item">{{ buyOrder.provider.code}}</li>
+      <li class="list-group-item">{{ buyOrder.provider.name }}</li>
+    </ul>
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos de la orden</li>
+      <li class="list-group-item">Number: {{ buyOrder.number }}</li>
+      <li class="list-group-item">Fecha: {{ buyOrder.createAt }}</li>
+
+    </ul>
+
+    <table class="table table-striped table-hover table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Lote</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of buyOrder.items">
+          <td>{{ item.product.description }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>
+            <input type="text" value="{{item.lot}}" class="form-control" (change)="updateLot(item.product.id, $event)">
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group row">
+      <div class="col-sm-12">
+          <button class="btn btn-primary" role="button" (click)='updateStore()'>Entrada</button>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

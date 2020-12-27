@@ -87,6 +87,17 @@ export class OrderService {
     );
   }
 
+  getLots(product: Product): Observable<String[]>{
+    return this.http.get(`${this.urlEndPoint}/load-lot/${product.id}`).pipe(
+      map ( response => {
+        let lot = response as String[];
+        return lot.map(lot => {
+            return lot;
+        });
+      }
+    )
+    );
+  }
 
   create(order: Order): Observable<any>{
     return this.http.post<Order>(this.urlEndPoint, order).pipe(
@@ -96,6 +107,14 @@ export class OrderService {
     );
   }
 
+  update(order: Order): Observable<any>{
+    return this.http.put(`${this.urlEndPoint}/${order.id}`, order).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
+  }
+/*
   update(order: Order): Observable<Order>{
     return this.http.put(`${this.urlEndPoint}/${order.id}`, order).pipe(
       map((response: any) => response.order as Order),
@@ -104,6 +123,7 @@ export class OrderService {
       })
     );
   }
+*/
 
   delete(id: number): Observable<any>{
     return this.http.delete<Order>(`${this.urlEndPoint}/${id}`).pipe(
@@ -122,6 +142,13 @@ export class OrderService {
     setOrder.observation = order.observation;
     for (let item of order.items){
         let itemTemp = new OrderItem();
+        this.getLots(item.product).
+          subscribe(lots => {
+            if(!lots.includes(item.lot)){
+                lots.push(item.lot);
+            }
+            itemTemp.lots = lots;
+          });
         itemTemp.id = item.id;
         itemTemp.price = item.price;
         itemTemp.discount = item.discount;
@@ -130,7 +157,10 @@ export class OrderService {
         itemTemp.iva = item.iva;
         itemTemp.ivaType = item.ivaType;
         itemTemp.lot = item.lot;
+
+//        itemTemp.lots.push(item.lot);
         setOrder.items.push(itemTemp)
+        console.log(item);
     }
     return setOrder;
   }

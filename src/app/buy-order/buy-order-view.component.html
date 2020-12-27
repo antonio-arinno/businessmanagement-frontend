@@ -1,21 +1,21 @@
-<div class="card bg-light" *ngIf="order" >
+<div class="card bg-light" *ngIf="buyOrder" >
   <div class="card-header">
-    {{titulo}} {{order.number}}
-    <a [routerLink]="['/order']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+    {{titulo}} {{buyOrder.number}}
+    <a [routerLink]="['/buy-order']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
   </div>
 
   <div class="card-body">
 
     <ul class="list-group my-2">
-      <li class="list-group-item list-group-item-primary">Datos del cliente</li>
-      <li class="list-group-item">{{ order.customer.code}}</li>
-      <li class="list-group-item">{{ order.customer.name }}</li>
+      <li class="list-group-item list-group-item-primary">Datos del proveedor</li>
+      <li class="list-group-item">{{ buyOrder.provider.code}}</li>
+      <li class="list-group-item">{{ buyOrder.provider.name }}</li>
     </ul>
 
     <ul class="list-group my-2">
       <li class="list-group-item list-group-item-primary">Datos de la orden</li>
-      <li class="list-group-item">Number: {{ order.number }}</li>
-      <li class="list-group-item">Fecha: {{ order.createAt }}</li>
+      <li class="list-group-item">Number: {{ buyOrder.number }}</li>
+      <li class="list-group-item">Fecha: {{ buyOrder.createAt }}</li>
 
     </ul>
 
@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of order.items">
+        <tr *ngFor="let item of buyOrder.items">
           <td>{{ item.product.description }}</td>
           <td>{{ item.lot }}</td>
           <td>{{ item.price }}</td>
@@ -42,8 +42,9 @@
       </tbody>
     </table>
 
+
     <h5 class="float-right">
-      <span>Total</span>: <span class="badge badge-secondary">{{order.getTotal()}}</span>
+      <span>Total</span>: <span class="badge badge-secondary">{{buyOrder.getTotal()}}</span>
     </h5>
 
     <div class="card border-info mb-4" style="max-width: 350px;">
@@ -51,8 +52,8 @@
         Observaciones
       </div>
       <div class="card card-body">
-        <p *ngIf="!order.observation">No tiene observación</p>
-        <p *ngIf="order.observation">{{order.observation}}</p>
+        <p *ngIf="!buyOrder.observation">No tiene observación</p>
+        <p *ngIf="buyOrder.observation">{{buyOrder.observation}}</p>
       </div>
     </div>
   </div>

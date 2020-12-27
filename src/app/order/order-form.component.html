@@ -7,16 +7,10 @@
 <div class="card border-primary mb-3">
   <div class="card-header">
     {{titulo}} {{order.number}}
-<!--    <a [routerLink]="['/order']" class=" float-right btn btn-primary">&laquo; volver</a> -->
     <a [routerLink]="['/order']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
   </div>
 
   <div class="card-body">
-<!--
-    <h4 class="card-title">
-      <a [routerLink]="['/order']" class="btn btn-light btn-xs">&laquo; volver</a>
-    </h4>
--->
     <form #orderForm="ngForm">
 
       <div class="form-group row">
@@ -119,7 +113,11 @@
         <tbody>
           <tr *ngFor="let item of order.items">
             <td>{{item.product.description}}</td>
-            <td><input type="text" value="{{item.lot}}" class="form-control" (change)="updateLot(item.product.id, $event)"></td>
+            <td>
+              <select class="form-control" [(ngModel)]="item.lot" [ngModelOptions]="{standalone: true}"  >  <!--[ngModelOptions]="{standalone: true}"  name="item.lot"-->
+                <option *ngFor="let lot of item.lots" [value]="lot" >{{lot}}</option>
+              </select>
+            </td>
             <td><input type="number" value="{{item.price}}" class="form-control" (change)="updatePrice(item.product.id, $event)"></td>
             <td><input type="number" value="{{item.discount}}" class="form-control" (change)="updateDiscount(item.product.id, $event)"></td>
             <td><input type="number" value="{{item.quantity}}" class="form-control" (change)="updateQuantity(item.product.id, $event)"></td>

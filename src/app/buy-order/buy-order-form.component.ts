@@ -10,7 +10,6 @@ import { BuyOrderItem } from '../model/buy-order-item';
 import { Product } from '../model/product';
 import { Iva } from '../model/iva';
 import { FormControl } from '@angular/forms';
-
 import Swal from 'sweetalert2';
 
 @Component({
@@ -161,16 +160,6 @@ export class BuyOrderFormComponent implements OnInit {
     this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
       if (id === item.product.id) {
         item.price = price;
-      }
-      return item;
-    });
-  }
-
-  updateLot(id: number, event: any): void {
-    let lot: string = event.target.value as string;
-    this.buyOrder.items = this.buyOrder.items.map((item: BuyOrderItem) => {
-      if (id === item.product.id) {
-        item.lot = lot;
       }
       return item;
     });

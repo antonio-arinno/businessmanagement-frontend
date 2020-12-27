@@ -9,38 +9,43 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./customer']">Customer</a>
+      <li class="nav-item dropdown" routerLinkActive="active">
+         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Ventas
+         </a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" [routerLink]="['./customer']" routerLinkActive="active">Clientes</a>
+           <a class="dropdown-item" [routerLink]="['./order']" routerLinkActive="active">Pedidos (Ventas)</a>
+         </div>
+      </li>
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Compras
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['./provider']" routerLinkActive="active">Provider</a>
+          <a class="dropdown-item" [routerLink]="['./product']" routerLinkActive="active">Product</a>
+          <a class="dropdown-item" [routerLink]="['./buy-order']" routerLinkActive="active">Pedidos (Compras)</a>
+        </div>
       </li>
 
       <li class="nav-item dropdown" routerLinkActive="active">
          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           Logistics
+           Almacen
          </a>
          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-           <a class="dropdown-item" [routerLink]="['./product']">Product</a>
-           <a class="dropdown-item" [routerLink]="['./provider']">Provider</a>
-           <a class="dropdown-item" [routerLink]="['./buy-order']">Albaran de Compra</a>
+           <a class="dropdown-item" [routerLink]="['./order-input']" routerLinkActive="active">Entrada Pedidos</a>
          </div>
       </li>
 
-<!--
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./logistics']">Logistics</a>
-      </li>
--->
-
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./order']">Order</a>
+        <a class="nav-link" [routerLink]="['./invoice']">Facturacion</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./invoice']">Invoice</a>
+        <a class="nav-link" [routerLink]="['./external-data']">Datos Externos</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./external-data']">External Data</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['./company']">Company</a>
+        <a class="nav-link" [routerLink]="['./company']">Compañia</a>
       </li>
     </ul>
     <ul class="navbar-nav navbar-right">

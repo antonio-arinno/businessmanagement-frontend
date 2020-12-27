@@ -19,29 +19,21 @@
           <th>Date</th>
           <th>Total</th>
           <th>Factura</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit/view</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let order of orders">
-          <td>{{ order.number }}</td>
+          <td>
+              <a *ngIf="order.invoice" [routerLink]="['/order/view',order.id]" class="link">{{ order.number }}</a>
+              <a *ngIf="!order.invoice" [routerLink]="['/order/form',order.id]" class="link">{{ order.number }}</a>
+          </td>
           <td>{{ order.customer.name }}</td>
           <td>{{ order.createAt }}</td>
           <td>{{ order.total | number:'1.2-2' }}</td>
           <td *ngIf="order.invoice">{{ order.invoice.number }}</td>
           <td *ngIf="!order.invoice"></td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="button" [routerLink]="['/order/form',order.id]"
-                    class="btn btn-primary btn-sm" [disabled]="order.invoice" style="margin-right: 1px; margin-left: 1px">
-              Edit
-            </button>
 
-            <button type="button" name="button" [routerLink]="['/order/view',order.id]"
-                    class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
-              View
-            </button>
-          </td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="delete" (click)='delete(order)' class="btn btn-danger btn-sm" [disabled]="order.invoice">
               delete
@@ -57,3 +49,20 @@
 
   </div>
 </div>
+<!--
+
+<th *ngIf="authService.hasRole('ROLE_ADMIN')">edit/view</th>
+
+
+<td *ngIf="authService.hasRole('ROLE_ADMIN')">
+  <button type="button" name="button" [routerLink]="['/order/form',order.id]"
+          class="btn btn-primary btn-sm" [disabled]="order.invoice" style="margin-right: 1px; margin-left: 1px">
+    Edit
+  </button>
+
+  <button type="button" name="button" [routerLink]="['/order/view',order.id]"
+          class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
+    View
+  </button>
+</td>
+-->

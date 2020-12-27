@@ -29,6 +29,17 @@ export class BuyOrderService {
     );
   }
 
+  getPendingBuyOrders(page: number): Observable<any>{
+    return this.http.get(this.urlEndPoint + '/pending/page/' + page).pipe(
+      map ( (response:any) => {
+        (response.content as BuyOrder[]).map(buyOrder => {
+            return buyOrder;
+        });
+        return response;
+      })
+    );
+  }
+
   getBuyOrder(id: number): Observable<BuyOrder>{
     return this.http.get<BuyOrder>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
@@ -110,6 +121,15 @@ export class BuyOrderService {
 
   pdf(id: number): Observable<Blob>{
     return this.http.get(`${this.urlEndPoint}/pdf/${id}`, { responseType : 'blob'  });
+  }
+
+
+  updateStore(buyOrder: BuyOrder): Observable<any>{
+    return this.http.put(`${this.urlEndPoint}/update-store/${buyOrder.id}`, buyOrder).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    );
   }
 
 

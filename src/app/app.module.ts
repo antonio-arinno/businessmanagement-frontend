@@ -39,6 +39,9 @@ import { BuyOrderFormComponent } from './buy-order/buy-order-form.component';
 import { OrderInputComponent } from './order-input/order-input.component';
 import { OrderInputFormComponent } from './order-input/order-input-form.component';
 import { BuyOrderViewComponent } from './buy-order/buy-order-view.component';
+import { ProductLotComponent } from './product-lot/product-lot.component';
+import { InputDirectStoreComponent } from './input-direct-store/input-direct-store.component';
+import { InputDirectStoreFormComponent } from './input-direct-store/input-direct-store-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/customer', pathMatch: 'full' },
@@ -83,6 +86,11 @@ const routes: Routes = [
 
   { path: 'external-data', component: ExternalDataComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
+  { path: 'product-lot', component: ProductLotComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
+  { path: 'input-direct-store', component: InputDirectStoreComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'input-direct-store/form', component: InputDirectStoreFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+
   { path: 'company', component: CompanyComponent },
   { path: 'login', component: LoginComponent }
 ];
@@ -114,7 +122,10 @@ const routes: Routes = [
     BuyOrderFormComponent,
     OrderInputComponent,
     OrderInputFormComponent,
-    BuyOrderViewComponent
+    BuyOrderViewComponent,
+    ProductLotComponent,
+    InputDirectStoreComponent,
+    InputDirectStoreFormComponent
   ],
   imports: [
     BrowserModule,

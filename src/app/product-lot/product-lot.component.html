@@ -1,0 +1,38 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Stock</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Lista de produtos - lotes </h5>
+
+    <div *ngIf="!productsLots" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <div *ngIf="productsLots?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="productsLots?.length>0">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Lote</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let productLot of productsLots">
+          <td>{{ productLot.product.description }}</td>
+          <td>{{ productLot.lot }}</td>
+          <td>{{ productLot.stock }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]="paginator">
+
+    </paginator-nav>
+
+  </div>
+</div>

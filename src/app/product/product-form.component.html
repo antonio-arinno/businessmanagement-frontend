@@ -61,15 +61,34 @@
 
       <div class="form-group row">
         <label for="iva" class="col-form-label col-sm-2">Iva</label>
-
         <div class="col-sm-6">
           <select class="form-control" name="ivaType" [(ngModel)]="product.ivaType">
             <option *ngFor="let ivaType of ivaTypes" [value]="ivaType.value">{{ivaType.text}}</option>
           </select>
         </div>
-
       </div>
 
+      <div class="form-group row">
+        <label for="stock" class="col-form-label col-sm-2">Stock</label>
+        <div class="col-sm-6">
+          {{product.stock}}
+        </div>
+      </div>
+
+      <table class="table table-striped table-hover table-sm"*ngIf="product.items.length > 0">
+        <thead>
+          <tr>
+            <th>Lote</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of product.items">
+            <td>{{ item.lot }}</td>
+            <td>{{ item.stock }}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="form-group row">
         <div class="col-sm-6">

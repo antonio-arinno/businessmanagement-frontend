@@ -1,0 +1,44 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Entrada de Directa Almacen</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado entradas directas almacen</h5>
+
+    <div class="my-2 text-left">
+      <buttom *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="['/input-direct-store/form']" >Crear Entrada Directa</buttom>
+    </div>
+
+    <div *ngIf="!inputsDirectsStore" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <div *ngIf="inputsDirectsStore?.length==0" class="alert alert-info">
+        No hay registros en al base de datos!
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="inputsDirectsStore?.length>0">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Lote</th>
+          <th>Fecha</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inputDirectStore of inputsDirectsStore">
+          <td>{{ inputDirectStore.product.description }}</td>
+          <td>{{ inputDirectStore.lot }}</td>
+          <td>{{ inputDirectStore.createAt }}</td>
+          <td>{{ inputDirectStore.quantity }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]= "paginator">
+
+    </paginator-nav>
+
+  </div>
+</div>

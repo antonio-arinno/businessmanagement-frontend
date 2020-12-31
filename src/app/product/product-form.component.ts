@@ -59,6 +59,7 @@ export class ProductFormComponent implements OnInit {
       if(id){
         this.productService.getProduct(id)
           .subscribe((product) => {
+            console.log(product);
             this.product = product;
             this.titulo = 'Actualizar Producto';
           },

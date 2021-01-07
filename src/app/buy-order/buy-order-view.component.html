@@ -14,10 +14,20 @@
 
     <ul class="list-group my-2">
       <li class="list-group-item list-group-item-primary">Datos de la orden</li>
-      <li class="list-group-item">Number: {{ buyOrder.number }}</li>
+      <li class="list-group-item">Numero: {{ buyOrder.number }}  - Fecha Entrada: {{ buyOrder.inputDate }}</li>
       <li class="list-group-item">Fecha: {{ buyOrder.createAt }}</li>
 
     </ul>
+
+    <div class="card border-info" > <!-- style="max-width: 350px;" -->
+      <div class="card card-header">
+        Observaciones
+      </div>
+      <div class="card card-body">
+        <p *ngIf="!buyOrder.observation">No tiene observación</p>
+        <p *ngIf="buyOrder.observation">{{buyOrder.observation}}</p>
+      </div>
+    </div>
 
     <table class="table table-striped table-hover table-bordered my-3">
       <thead>
@@ -42,19 +52,15 @@
       </tbody>
     </table>
 
-
     <h5 class="float-right">
       <span>Total</span>: <span class="badge badge-secondary">{{buyOrder.getTotal()}}</span>
     </h5>
 
-    <div class="card border-info mb-4" style="max-width: 350px;">
-      <div class="card card-header">
-        Observaciones
-      </div>
-      <div class="card card-body">
-        <p *ngIf="!buyOrder.observation">No tiene observación</p>
-        <p *ngIf="buyOrder.observation">{{buyOrder.observation}}</p>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" role="button" (click)='pdf()'>PDF</button>
       </div>
     </div>
+
   </div>
 </div>

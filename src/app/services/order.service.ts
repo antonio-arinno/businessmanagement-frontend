@@ -140,6 +140,7 @@ export class OrderService {
     setOrder.customer = order.customer;
     setOrder.createAt = order.createAt;
     setOrder.observation = order.observation;
+    setOrder.invoice = order.invoice;
     for (let item of order.items){
         let itemTemp = new OrderItem();
         this.getLots(item.product).
@@ -157,10 +158,7 @@ export class OrderService {
         itemTemp.iva = item.iva;
         itemTemp.ivaType = item.ivaType;
         itemTemp.lot = item.lot;
-
-//        itemTemp.lots.push(item.lot);
         setOrder.items.push(itemTemp)
-        console.log(item);
     }
     return setOrder;
   }

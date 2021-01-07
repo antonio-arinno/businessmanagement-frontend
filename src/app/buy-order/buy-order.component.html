@@ -15,30 +15,27 @@
       <thead>
         <tr>
           <th>Number</th>
-          <th>Customer</th>
+          <th>Proveedor</th>
           <th>Date</th>
+          <th>Fecha Entrada</th>
           <th>Total</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit/view</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let buyOrder of buyOrders">
-          <td>{{ buyOrder.number }}</td>
+          <td>
+              <a *ngIf="buyOrder.inputDate" [routerLink]="['/buy-order/view',buyOrder.id]" class="link">{{ buyOrder.number }}</a>
+              <a *ngIf="!buyOrder.inputDate" [routerLink]="['/buy-order/form',buyOrder.id]" class="link">{{ buyOrder.number }}</a>
+          </td>
           <td>{{ buyOrder.provider.name }}</td>
           <td>{{ buyOrder.createAt }}</td>
-          <td>{{ buyOrder.total | number:'1.2-2' }}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="button" [routerLink]="['/buy-order/form', buyOrder.id]"
-                    class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
-              Edit
-            </button>
 
-            <button type="button" name="button" [routerLink]="['/buy-order/view',buyOrder.id]"
-                    class="btn btn-primary btn-sm" style="margin-right: 1px; margin-left: 1px">
-              View
-            </button>
-          </td>
+          <td *ngIf="buyOrder.inputDate">{{ buyOrder.inputDate }}</td>
+          <td *ngIf="!buyOrder.inputDate"></td>
+
+
+          <td>{{ buyOrder.total | number:'1.2-2' }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="delete" (click)='delete(buyOrder)' class="btn btn-danger btn-sm">
               delete

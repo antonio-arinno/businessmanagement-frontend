@@ -20,15 +20,14 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) { }
 
-  getInvoices(): Observable<Invoice[]>{
-    return this.http.get(this.urlEndPoint).pipe(
-      map ( response => {
-        let invoice = response as Invoice[];
-        return invoice.map(invoice => {
+  getInvoices(page: number): Observable<any>{
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+      map ( (response:any) => {
+        (response.content as Invoice[]).map(invoice => {
             return invoice;
         });
-      }
-    )
+        return response;
+      })
     );
   }
 

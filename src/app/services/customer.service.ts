@@ -46,7 +46,7 @@ export class CustomerService {
   }
 
 
-  create(customer: Customer): Observable<Customer>{
+  create(customer: Customer): Observable<any>{
     return this.http.post<Customer>(this.urlEndPoint, customer).pipe(
       catchError(e => {
 /*
@@ -73,7 +73,7 @@ export class CustomerService {
 
   }
 
-  update(customer: Customer): Observable<Customer>{
+  update(customer: Customer): Observable<any>{
     return this.http.put(`${this.urlEndPoint}/${customer.id}`, customer).pipe(
       map((response: any) => response.customer as Customer),
       catchError(e => {

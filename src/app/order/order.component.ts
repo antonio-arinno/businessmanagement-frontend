@@ -18,18 +18,6 @@ export class OrderComponent implements OnInit {
   constructor(private orderService: OrderService,
               private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
-
-/*
-  ngOnInit(): void {
-    this.orderService.getOrders().subscribe(
-      orders => this.orders = orders,
-      err =>{
-        Swal.fire(err.error.error, err.error.message, 'error')
-      }
-    );
-  }
-*/
-
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe( params => {
       let page: number = +params.get('page');
@@ -39,7 +27,6 @@ export class OrderComponent implements OnInit {
       this.orderService.getOrders(page).subscribe(
         response => {
           this.orders = response.content as Order[];
-          console.log(this.orders);
           this.paginator = response;
         });
       }

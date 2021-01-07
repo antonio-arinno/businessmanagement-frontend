@@ -5,9 +5,11 @@
 </ul>
 
 <div class="card border-primary mb-3">
-  <div class="card-header">{{ titulo }}</div>
+  <div class="card-header">
+    {{ titulo }}
+    <a [routerLink]="['/product']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+  </div>
   <div class="card-body">
-
     <form>
 
       <div class="form-group row">
@@ -92,10 +94,10 @@
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!product.id else elseBlock">Create</button>
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!product.id else elseBlock">Grabar</button>
 
           <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
+            <button class="btn btn-primary" role="button" (click)='update()'>Actualizar</button>
           </ng-template>
 
         </div>

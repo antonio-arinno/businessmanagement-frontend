@@ -22,19 +22,18 @@
         <tr>
           <th>code</th>
           <th>description</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">edit</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let product of products">
-          <td>{{ product.code }}</td>
-          <td>{{ product.description }}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="button" [routerLink]="['/product/form',product.id]" class="btn btn-primary btn-sm">
-              edit
-            </button>
+
+          <td>
+            <a [routerLink]="['/product/form',product.id]" class="link">{{ product.code }}</a>
           </td>
+
+
+          <td>{{ product.description }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="edit" (click)='delete(product)' class="btn btn-danger btn-sm">
               delete

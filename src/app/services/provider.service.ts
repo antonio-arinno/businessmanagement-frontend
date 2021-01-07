@@ -46,7 +46,7 @@ export class ProviderService {
     )
   }
 
-  create(provider: Provider): Observable<Provider>{
+  create(provider: Provider): Observable<any>{
     return this.http.post<Provider>(this.urlEndPoint, provider).pipe(
       catchError(e => {
         return throwError(e);
@@ -54,7 +54,7 @@ export class ProviderService {
     );
   }
 
-  update(provider: Provider): Observable<Provider>{
+  update(provider: Provider): Observable<any>{
     return this.http.put(`${this.urlEndPoint}/${provider.id}`, provider).pipe(
       map((response: any) => response.provider as Provider),
       catchError(e => {

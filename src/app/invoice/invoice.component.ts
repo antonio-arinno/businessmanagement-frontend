@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice } from '../model/invoice';
 import { InvoiceService } from '../services/invoice.service';
-import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../user/auth.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -13,15 +14,24 @@ import { AuthService } from '../user/auth.service';
 export class InvoiceComponent implements OnInit {
 
   invoices: Invoice[];
+  paginator: any;
+  component= '/invoice';
 
   constructor(private invoiceService: InvoiceService,
+              private activatedRoute: ActivatedRoute,
               public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.invoiceService.getInvoices().subscribe(
-      invoices => this.invoices = invoices,
-      err =>{
-        Swal.fire(err.error.error, err.error.message, 'error')
+    this.activatedRoute.paramMap.subscribe( params => {
+      let page: number = +params.get('page');
+      if(!page){
+        page = 0;
+      }
+      this.invoiceService.getInvoices(page).subscribe(
+        response => {
+          this.invoices = response.content as Invoice[];
+          this.paginator = response;
+        });
       }
     );
   }
@@ -76,7 +86,9 @@ export class InvoiceComponent implements OnInit {
   generate(): void{
     this.invoiceService.generate().subscribe(
       response => {
-        Swal.fire(response.title, response.message,  'success');
+        window.location.reload();
+        Swal.fire(response.title, response.message, 'success');
+
       },err => {
         Swal.fire(err.error.error, err.error.message, 'error')
       }

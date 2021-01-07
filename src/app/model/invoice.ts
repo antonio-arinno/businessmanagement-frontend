@@ -1,5 +1,5 @@
 import { Customer } from './customer';
-import { InvoiceItem } from './invoice-item';
+import { Order } from './order';
 
 export class Invoice {
 
@@ -8,16 +8,7 @@ export class Invoice {
   customer: Customer;
   createAt: string;
   observation: string;
-  items: Array<InvoiceItem> = [];
-  total: number;
-  prueba: string;
-
-  getTotal():number {
-    this.total= 0
-    this.items.forEach((item: InvoiceItem) => {
-      this.total += item.price * item.quantity;
-    });
-    return this.total;
-  }
+  items: Array<Order> = [];
+  totalWithIva : number;
 
 }

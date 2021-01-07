@@ -7,6 +7,7 @@ export class BuyOrder {
   number: number;
   provider: Provider;
   createAt: string;
+  inputDate: string;
   observation: string;
   items: Array<BuyOrderItem> = [];
 

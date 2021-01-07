@@ -16,7 +16,6 @@ import { TokenInterceptor } from './user/interceptor/token.interceptor';
 import { AuthInterceptor } from './user/interceptor/auth.interceptor';
 import { CompanyComponent } from './company/company.component';
 import { InvoiceComponent } from './invoice/invoice.component';
-import { InvoiceFormComponent } from './invoice/invoice-form.component';
 import { InvoiceViewComponent } from './invoice/invoice-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -80,15 +79,17 @@ const routes: Routes = [
   { path: 'order/view/:id', component: OrderViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'invoice', component: InvoiceComponent},
+  { path: 'invoice/page/:page', component:InvoiceComponent},  
   { path: 'invoice/view/:id', component: InvoiceViewComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
-  { path: 'invoice/form', component: InvoiceFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
   { path: 'invoice/generate', component: InvoiceGenerateComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'external-data', component: ExternalDataComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'product-lot', component: ProductLotComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'product-lot/page/:page', component: ProductLotComponent},
 
   { path: 'input-direct-store', component: InputDirectStoreComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
+  { path: 'input-direct-store/page/:page', component: InputDirectStoreComponent},
   { path: 'input-direct-store/form', component: InputDirectStoreFormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}  },
 
   { path: 'company', component: CompanyComponent },
@@ -106,7 +107,6 @@ const routes: Routes = [
     CustomerFormComponent,
     CompanyComponent,
     InvoiceComponent,
-    InvoiceFormComponent,
     InvoiceViewComponent,
     OrderComponent,
     OrderFormComponent,

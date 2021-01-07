@@ -33,23 +33,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let invoice of invoices">
-          <td>{{ invoice.number }}</td>
+
+          <td>
+              <a [routerLink]="['/invoice/view', invoice.id]" class="link">{{ invoice.number }}</a>
+          </td>
           <td>{{ invoice.customer.name }}</td>
           <td>{{ invoice.createAt }}</td>
-          <td>{{ invoice.total }}</td>
-
+          <td>{{ invoice.totalWithIva }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="edit" (click)='pdf(invoice)' class="btn btn-primary btn-sm">
+            <button type="button" name="pdf" (click)='pdf(invoice)' class="btn btn-primary btn-sm">
               pdf
             </button>
           </td>
-<!--
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-            <button type="button" name="button" [routerLink]="['/invoice/view',invoice.id]" class="btn btn-primary btn-sm">
-              view
-            </button>
-          </td>
--->
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="edit" (click)='delete(invoice)' class="btn btn-danger btn-sm">
               delete
@@ -58,5 +53,10 @@
         </tr>
       </tbody>
     </table>
+
+    <paginator-nav *ngIf="paginator" [component]="component" [paginator]= "paginator">
+
+    </paginator-nav>
+
   </div>
 </div>

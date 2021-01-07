@@ -5,7 +5,10 @@
 </ul>
 
 <div class="card border-primary mb-3">
-  <div class="card-header">{{ titulo }}</div>
+  <div class="card-header">
+    {{ titulo }}
+    <a [routerLink]="['/customer']" class="float-right btn btn-light btn-xs">&laquo; volver</a>
+  </div>
   <div class="card-body">
 
     <form>
@@ -140,7 +143,7 @@
           <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!customer.id else elseBlock">Save</button>
 
           <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" (click)='update()'>Update</button>
+            <button class="btn btn-primary" role="button" (click)='update()'>Actualizar</button>
           </ng-template>
 
         </div>

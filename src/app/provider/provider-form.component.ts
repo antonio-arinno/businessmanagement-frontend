@@ -32,7 +32,6 @@ export class ProviderFormComponent implements OnInit {
         this.providerService.getProvider(id)
           .subscribe((provider) => {
             this.provider = provider;
-            console.log(this.provider);
             },
            err => {
              this.router.navigate(['/provider'])
@@ -45,9 +44,9 @@ export class ProviderFormComponent implements OnInit {
 
   create(): void{
     this.providerService.create(this.provider)
-    .subscribe( provider => {
+    .subscribe( response => {
       this.router.navigate(['/provider'])
-      Swal.fire(  'Nuevo provider',  'Provider creado con exito',  'success');
+      Swal.fire(response.title, response.message,  'success');
     },
     err => {
       if(!err.error.errors){
@@ -60,9 +59,9 @@ export class ProviderFormComponent implements OnInit {
 
   update():void{
     this.providerService.update(this.provider)
-    .subscribe ( provider => {
+    .subscribe ( response => {
       this.router.navigate(['/provider'])
-      Swal.fire('Proveedor Actualizado', 'Proveedor actualizado con exito', 'success')
+      Swal.fire(response.title, response.message,  'success');
     },
     err => {
       if(!err.error.errors){

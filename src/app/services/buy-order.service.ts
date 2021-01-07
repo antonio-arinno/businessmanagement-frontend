@@ -79,6 +79,7 @@ export class BuyOrderService {
     setBuyOrder.provider = buyOrder.provider;
     setBuyOrder.createAt = buyOrder.createAt;
     setBuyOrder.observation = buyOrder.observation;
+    setBuyOrder.inputDate = buyOrder.inputDate;
     for (let item of buyOrder.items){
         let itemTemp = new BuyOrderItem();
         itemTemp.id = item.id;

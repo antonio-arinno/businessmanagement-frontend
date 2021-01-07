@@ -21,6 +21,7 @@ export class InvoiceViewComponent implements OnInit {
       let id = +params.get('id');
       this.invoiceService.getInvoice(id).subscribe(invoice => {
         this.invoice = invoice;
+        console.log(this.invoice);
       })
     })
   }

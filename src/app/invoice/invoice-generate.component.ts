@@ -72,6 +72,7 @@ export class InvoiceGenerateComponent implements OnInit {
     this.invoiceService.modalClose();
     this.idDates = new IdDates();
     this.idDates.dateRange = new DateRange();
+    window.location.reload();
   }
 
 

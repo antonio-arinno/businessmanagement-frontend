@@ -14,14 +14,14 @@
 
     <ul class="list-group my-2">
       <li class="list-group-item list-group-item-primary">Datos de la orden</li>
-      <li class="list-group-item">Number: {{ order.number }}</li>
+      <li class="list-group-item">Albaran: {{ order.number }} - Factura: {{ order.invoice.number }}</li>
       <li class="list-group-item">Fecha: {{ order.createAt }}</li>
-
     </ul>
 
     <table class="table table-striped table-hover table-bordered my-3">
       <thead>
         <tr>
+          <th>Referencia</th>
           <th>Producto</th>
           <th>Lote</th>
           <th>Precio</th>
@@ -32,6 +32,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of order.items">
+          <td>{{ item.product.code }}</td>
           <td>{{ item.product.description }}</td>
           <td>{{ item.lot }}</td>
           <td>{{ item.price }}</td>
@@ -43,7 +44,7 @@
     </table>
 
     <h5 class="float-right">
-      <span>Total</span>: <span class="badge badge-secondary">{{order.getTotal()}}</span>
+      <span>Total</span>: <span class="badge badge-secondary">{{ order.getTotal() }}</span>
     </h5>
 
     <div class="card border-info mb-4" style="max-width: 350px;">
@@ -55,5 +56,8 @@
         <p *ngIf="order.observation">{{order.observation}}</p>
       </div>
     </div>
+
+    <button class="btn btn-primary" role="button" (click)='pdf()'>PDF</button>
+
   </div>
 </div>
